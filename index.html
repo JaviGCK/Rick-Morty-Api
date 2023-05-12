@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,8 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-        <script src="dist/script.js" defer></script>
+        
+        <script type="module" src="dist/script.js" defer></script>
 
 </head>
 
@@ -19,7 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
             <div class="container-fluid">
-                <h1 class="navbar-brand text-warning fs-1 text center-title">Rick & Morty</h1>
+                <h1 class="text-yellow fs-1 text center-title mt-4">Rick & Morty</h1>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,35 +39,27 @@
     </header>
 
     <main class="d-flex align-items-center">
-        <section class="d-flex justify-content-center col1 col-md-3 col-lg-2 dark-mode container-border">
+        <section class="d-flex justify-content-center col1 col-md-3 col-lg-2  container-border">
             <div class="container-fluid">
                 <div class="row no-gutters">
-                    <h2 class="text-center mt-4 text-warning">Episode</h2>
-                    <div class="sidebar-scroll-size scroll" id="divUlContainer">
-                    
-                       <!-- <ul class="nav flex-column sidebar-menu">
-                            <li class="mb-3 sidebar-lineheight">
-                                <h5 class="text-center text-warning">Elemento 1</h5>
-                            </li>
-    
-                        </ul>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-outline-warning btn-size" id="buttonLoad">Load</button>
-                        </div>
-                    </div> -->
+                    <h2 class="text-center mt-4 text-yellow">Episode</h2>
+                    <div class="sidebar-scroll-size scroll" id="ulContainer">
+                 <ul class="nav flex-column sidebar-menu" id="ulList">
+
+                 </ul>   
                 </div>
             </div>
         </section>
 
-        <section class="d-flex dark-mode col4 col-md-6 col-lg-2 flex-grow-1 main-container-size container-border ">
+        <section class="d-flex  col4 col-md-6 col-lg-2 flex-grow-1 main-container-size container-border ">
             <div class="container scroll main-scroll-size">
-                <div class="row">
-                    <div>
-                        <h2 class="text-warning">Episode Name</h2>
-                        <h3 class="text-warning">Air date</h3>
+                <div class="row row justify-content-between align-items-start max-size" id="cardContainer">
+                    <!--<div>
+                        <h2 class="text-yellow">Episode Name</h2>
+                        <h3 class="text-yellow">Air date</h3>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
+                        <div class="card text-bg-success text-yellow mt-4">
                             <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
                             <div class="card-body">
                                 <h5 class="card-title">Character Name 1</h5>
@@ -74,235 +67,8 @@
                                 <p class="card-text">Character Species 1</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 3</h5>
-                                <p class="card-text">Character Status 3</p>
-                                <p class="card-text">Character Species 3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 3</h5>
-                                <p class="card-text">Character Status 3</p>
-                                <p class="card-text">Character Species 3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 3</h5>
-                                <p class="card-text">Character Status 3</p>
-                                <p class="card-text">Character Species 3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 3</h5>
-                                <p class="card-text">Character Status 3</p>
-                                <p class="card-text">Character Species 3</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 3</h5>
-                                <p class="card-text">Character Status 3</p>
-                                <p class="card-text">Character Species 3</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card text-bg-success text-warning mt-4">
-                            <img src="images/rick.jpeg" class="card-img-top" alt="Character Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Character Name 2</h5>
-                                <p class="card-text">Character Status 2</p>
-                                <p class="card-text">Character Species 2</p>
-                            </div>
-                        </div>
-                    </div>
-
+                    </div> -->
+ 
                 </div>
             </div>
 

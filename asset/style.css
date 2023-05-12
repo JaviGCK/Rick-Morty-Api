@@ -5,18 +5,14 @@ body {
 }
 
 /* GENERAL STYLES*/
+
 .body-wallpaper {
   background-image: url(/images/tv_show-rick_and_morty-space-812414.jpeg);
 }
 
-.dark-mode {
-  background-color: transparent;
-  color: #fff;
-}
-
 .container-border {
   margin: 1vw;
-  border: 2px solid #00ff00;
+  border: 2px solid #97ce4c;
   border-radius: 15px;
 }
 
@@ -26,13 +22,12 @@ body {
   margin-bottom: 3vh;
 }
 
-.mt-4 {
-  margin-top: 3vh !important;
-  margin-bottom: 2vh;
-}
-
 .scroll {
   overflow-y: auto;
+}
+
+.text-yellow {
+  color: #f0e14a;
 }
 
 .transparent-input {
@@ -44,10 +39,6 @@ body {
 .transparent-input::placeholder {
   color: white;
   opacity: 0.5;
-}
-
-.color-card-bg {
-  background-color: #00ff00;
 }
 
 .center-title {
@@ -82,4 +73,9 @@ body {
 
 .main-scroll-size {
   margin: 2vh;
+}
+
+.max-size {
+  max-width: 17vw;
+  max-height: 30vh;
 }
