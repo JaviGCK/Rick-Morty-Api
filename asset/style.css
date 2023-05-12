@@ -6,7 +6,7 @@ body {
 
 /* GENERAL STYLES*/
 .body-wallpaper {
-  background-image: url(images/tv_show-rick_and_morty-space-812414.jpeg);
+  background-image: url(/images/tv_show-rick_and_morty-space-812414.jpeg);
 }
 
 .dark-mode {
@@ -46,8 +46,14 @@ body {
   opacity: 0.5;
 }
 
-.color-title {
-  color: #fecd1a;
+.color-card-bg {
+  background-color: #00ff00;
+}
+
+.center-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 2.5vw;
 }
 
 /* SIDEBAR STYLES */
