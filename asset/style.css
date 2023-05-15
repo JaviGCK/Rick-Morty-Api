@@ -70,7 +70,9 @@ body {
 
 .sidebar-scroll-size {
   height: 65vh;
+  overflow-y: scroll;
 }
+
 
 /* MAIN-CONTAINER STYLES*/
 
@@ -98,7 +100,7 @@ body {
 }
 
 .card-container {
-  height: 84vh;
+  height: 89%;
 }
 
 .card-img-top {
