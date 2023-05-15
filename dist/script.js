@@ -13,25 +13,26 @@ function createEpisodeElement(episode) {
     return listElement;
 }
 function createInfoEpisode(episode) {
+    const infoEpisode = document.querySelector("#sectionInfo");
     const divElement = document.createElement("div");
-    const episodeTitleElement = document.createElement("h2");
-    episodeTitleElement.classList.add("text-warning");
-    episodeTitleElement.textContent = "`${episode.name}`";
-    divElement.appendChild(episodeTitleElement);
-    const airDateElement = document.createElement("h3");
-    airDateElement.classList.add("text-warning");
-    airDateElement.textContent = "`${episode.air_date}`";
+    infoEpisode === null || infoEpisode === void 0 ? void 0 : infoEpisode.appendChild(divElement);
+    const titleElementEpisode = document.createElement("h2");
+    titleElementEpisode.classList.add("text-yellow");
+    titleElementEpisode.textContent = episode.name;
+    divElement.appendChild(titleElementEpisode);
+    const airDateElement = document.createElement("h2");
+    airDateElement.classList.add("text-yellow");
+    airDateElement.textContent = episode.air_date;
     divElement.appendChild(airDateElement);
     return divElement;
 }
 function createCharacterCards(character) {
-    const colDiv = document.createElement("div");
-    colDiv.classList.add("col-6", "col-md-4", "col-lg-3", "mb-4");
+    const cardContainer = document.getElementById("cardContainer");
     const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card", "text-bg-success", "text-yellow", "mt-4");
-    colDiv.appendChild(cardDiv);
+    cardDiv.classList.add("container-border", "text-yellow", "bg-green");
+    cardContainer === null || cardContainer === void 0 ? void 0 : cardContainer.appendChild(cardDiv);
     const imageElement = document.createElement("img");
-    imageElement.src = `${character.image}`;
+    imageElement.src = character.image;
     imageElement.classList.add("card-img-top");
     imageElement.alt = "Character Image";
     cardDiv.appendChild(imageElement);
@@ -39,16 +40,16 @@ function createCharacterCards(character) {
     cardBodyDiv.classList.add("card-body");
     cardDiv.appendChild(cardBodyDiv);
     const titleElement = document.createElement("h5");
-    titleElement.classList.add("card-title");
-    titleElement.textContent = `${character.name}`;
+    titleElement.classList.add("card-title", "mt-2");
+    titleElement.textContent = character.name;
     cardBodyDiv.appendChild(titleElement);
     const statusElement = document.createElement("p");
-    statusElement.classList.add("card-text");
-    statusElement.textContent = `${"Status"} - ${character.status}`;
+    statusElement.classList.add("card-text", "mt-2");
+    statusElement.textContent = `Status: ${character.status}`;
     cardBodyDiv.appendChild(statusElement);
     const speciesElement = document.createElement("p");
-    speciesElement.classList.add("card-text");
-    speciesElement.textContent = `${"Species"} - ${character.species}`;
+    speciesElement.classList.add("card-text", "mb-1");
+    speciesElement.textContent = `Species: ${character.species}`;
     cardBodyDiv.appendChild(speciesElement);
     return cardDiv;
 }
@@ -73,13 +74,20 @@ function loadSideBar() {
     });
 }
 function loadEpisode() {
+    clearInfo();
     const episodeId = this.getAttribute("episodeId");
     const urlEpisode = `https://rickandmortyapi.com/api/episode/${episodeId}`;
     fetch(urlEpisode)
         .then(response => response.json())
         .then(data => {
-        const cardInfoChar = document.querySelector("#cardContainer");
+        const infoEpisode = document.querySelector("#sectionInfo");
+        const cardInfoChar = document.createElement("div");
+        cardInfoChar.classList.add("card-container", "grid-container", "scroll");
+        cardInfoChar.setAttribute('id', 'cardContainer');
+        infoEpisode === null || infoEpisode === void 0 ? void 0 : infoEpisode.appendChild(cardInfoChar);
         const episode = data;
+        const episodeInfoElement = createInfoEpisode(episode);
+        infoEpisode === null || infoEpisode === void 0 ? void 0 : infoEpisode.insertBefore(episodeInfoElement, infoEpisode.firstChild);
         const characterURLs = episode.characters;
         characterURLs.forEach((characterURL) => {
             fetch(characterURL)
@@ -110,4 +118,8 @@ window.addEventListener("load", () => {
         }
     });
 });
+function clearInfo() {
+    const containerInfo1 = document.querySelector("#sectionInfo");
+    containerInfo1 === null || containerInfo1 === void 0 ? void 0 : containerInfo1.replaceChildren();
+}
 //# sourceMappingURL=script.js.map
