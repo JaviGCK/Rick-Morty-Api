@@ -1,5 +1,3 @@
-
-
 html,
 body {
   height: 100%;
@@ -7,6 +5,18 @@ body {
 }
 
 /* GENERAL STYLES*/
+
+@font-face {
+  font-family: 'myFont';
+  
+  src: url('/fonts/get_schwifty\ 5.ttf'),
+       
+       url() format('ttf');
+}
+
+.font-style {
+    font-family: 'myFont';
+}
 
 .body-wallpaper {
   background-image: url(/images/tv_show-rick_and_morty-space-812414.jpeg);
@@ -19,10 +29,10 @@ body {
   border-radius: 15px;
 }
 
-.btn-size {
-  width: 10vw;
-  margin-top: 2vh;
-  margin-bottom: 3vh;
+.grid-display {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .scroll {
@@ -33,25 +43,24 @@ body {
   color: #f0e14a;
 }
 
-.bg-green {
-  background-color: #008000;
+.bg-pink {
+  background-color: #e4a788;
+  opacity: calc(0.9);
 }
 
-.transparent-input {
-  background-color: transparent !important;
-  border: none;
-  color: white;
+.border-card {
+  border: 5px solid #97ce4c;
 }
 
-.transparent-input::placeholder {
-  color: white;
-  opacity: 0.5;
+.border-green {
+  border-bottom: 2px solid #97ce4c;
+  margin-top: 5vh;
 }
 
 .center-title {
   margin-bottom: 0;
   padding-bottom: 0;
-  padding-left: 2.5vw;
+  padding-left: 5vw;
 }
 
 /* SIDEBAR STYLES */
@@ -73,24 +82,16 @@ body {
   overflow-y: scroll;
 }
 
-
 /* MAIN-CONTAINER STYLES*/
 
 .main-container-size {
   height: 90vh;
-  width: 78.5vw;
+
 }
 
 .main-scroll-size {
   margin-bottom: 2vh;
 }
-
-.max-size {
-  max-width: 17vw;
-  max-height: 30vh;
-}
-
-
 
 .grid-container {
   display: grid;
@@ -118,4 +119,61 @@ body {
   font-size: 14px; 
 }
 
+.display {
+  display: flex;
+}
 
+.button-style {
+  background-color: transparent;
+}
+
+.img-size-button {
+  width: 50px;
+  height: 50px;
+}
+
+.full-width {
+  width: 100vw;
+}
+
+.full-heigth {
+  height: 83vh;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .display-respons {
+    display: block;
+  }
+
+  .size-respons {
+    margin: 3vh 0;
+    height: 85vh;
+    width: 99vw;
+  }
+
+  .size-respons-ul {
+    height: 80vh;
+  }
+
+  .size-respons-scroll {
+    height: 75vh;
+  }
+
+  .size-respons-card {
+    margin: 2vh 0;
+  }
+
+  .images-respons {
+    height: 30vh;
+  }
+
+  .center-title-respons {
+    padding-left: 30vw;
+  }
+
+  .display-respons {
+    display: block;
+    width: 87vw;
+  }
+
+}

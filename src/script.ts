@@ -1,18 +1,20 @@
-const urlApi: string = "https://rickandmortyapi.com/api";
+import { Character, Episode, Episodes, CharacterLocation } from "./types";
+
 window.addEventListener("load", loadSideBar);
 let nextPage = 1;
 
 function loadSideBar() {
-
-  const urlEpisodes: string = "https://rickandmortyapi.com/api/episode";
+  
+  const urlEpisodes = "https://rickandmortyapi.com/api/episode";
   const sideBar = document.querySelector("#sideBarContainer");
   const ul = document.querySelector("#ulList");
+
   if (ul?.childElementCount === 51) return
   if (sideBar?.childElementCount === 0) {
 
     fetch(`${urlEpisodes}?page=${nextPage}`)
       .then(response => response.json())
-      .then(data => {
+      .then((data: Episodes) => {
 
         const containerDiv = document.createElement("div");
         containerDiv.classList.add("container-fluid");
@@ -23,7 +25,7 @@ function loadSideBar() {
         containerDiv.appendChild(h2);
 
         const ulContainerDiv = document.createElement("div");
-        ulContainerDiv.classList.add("sidebar-scroll-size", "scroll");
+        ulContainerDiv.classList.add("sidebar-scroll-size", "size-respons-scroll");
         ulContainerDiv.setAttribute("id", "ulContainer");
 
         const ul = document.createElement("ul");
@@ -36,12 +38,12 @@ function loadSideBar() {
 
         const episodes = data.results;
 
-        episodes.forEach((episode: any) => {
+        episodes.forEach(episode => {
           const listElement = document.createElement("li");
           listElement.classList.add("mb-3", "sidebar-lineheight");
 
           const episodeList = document.createElement("h5");
-          episodeList.classList.add("text-center", "text-warning");
+          episodeList.classList.add("text-center", "text-yellow");
           episodeList.textContent = `${episode.id} - ${episode.name}`;
           listElement.appendChild(episodeList);
 
@@ -63,16 +65,16 @@ function loadSideBar() {
     }
     fetch(url)
       .then(response => response.json())
-      .then(data => {
+      .then((data: Episodes) => {
 
         const episodes = data.results;
 
-        episodes.forEach((episode: any) => {
+        episodes.forEach(episode => {
           const listElement = document.createElement("li");
           listElement.classList.add("mb-3", "sidebar-lineheight");
 
           const episodeList = document.createElement("h5");
-          episodeList.classList.add("text-center", "text-warning");
+          episodeList.classList.add("text-center", "text-yellow");
           episodeList.textContent = `${episode.id} - ${episode.name}`;
           listElement.appendChild(episodeList);
 
@@ -85,21 +87,6 @@ function loadSideBar() {
   }
 }
 
-function scrollInfinity() {
-
-  const ulContainerDiv = document.querySelector("#ulContainer");
-  if (ulContainerDiv === null) return;
-
-  const scrollTop = ulContainerDiv.scrollTop;
-  const scrollHeight = ulContainerDiv.scrollHeight;
-  const clientHeight = ulContainerDiv.clientHeight;
-
-  if (scrollTop + clientHeight >= scrollHeight - 200 && nextPage !== -1) {
-    loadSideBar();
-  };
-}
-
-
 function loadEpisode(this: HTMLElement) {
   clearInfo();
 
@@ -109,8 +96,9 @@ function loadEpisode(this: HTMLElement) {
 
   fetch(urlEpisode)
     .then(response => response.json())
-    .then((data: any) => {
+    .then((data: Episode) => {
       const infoEpisode = document.querySelector("#sectionInfo");
+      infoEpisode?.classList.add("container-border");
 
       const episodeHeader = document.createElement("div");
       episodeHeader.classList.add("episode-header");
@@ -128,7 +116,8 @@ function loadEpisode(this: HTMLElement) {
       infoEpisode?.appendChild(episodeHeader);
 
       const cardInfoChar = document.createElement("div");
-      cardInfoChar.classList.add("card-container", "grid-container", "scroll");
+      cardInfoChar.classList.add("card-container", "grid-display", "display-respons", "overflow-auto", "w-100");
+      cardInfoChar.style.maxHeight = "73vh";
       cardInfoChar.setAttribute('id', 'cardContainer');
       infoEpisode?.appendChild(cardInfoChar);
 
@@ -136,17 +125,204 @@ function loadEpisode(this: HTMLElement) {
       characterURLs.forEach((characterURL: string) => {
         fetch(characterURL)
           .then(response => response.json())
-          .then((characterData: any) => {
+          .then((characterData: Character) => {
             const character = characterData;
 
             const cardContainer = document.querySelector("#cardContainer");
 
             const cardDiv = document.createElement("div");
-            cardDiv.classList.add("container-border", "text-yellow", "bg-green");
+            cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
 
             const imageElement = document.createElement("img");
             imageElement.src = character.image;
-            imageElement.classList.add("card-img-top");
+            imageElement.classList.add("card-img-top", "images-respons");
+            imageElement.alt = "Character Image";
+            cardDiv.appendChild(imageElement);
+
+            const cardBodyDiv = document.createElement("div");
+            cardBodyDiv.classList.add("card-body");
+
+            const titleElement = document.createElement("h5");
+            titleElement.classList.add("card-title", "mt-2");
+            titleElement.textContent = `${character.name}`;
+            cardBodyDiv.appendChild(titleElement);
+            const statusElement = document.createElement("p");
+            statusElement.classList.add("card-text", "mt-2");
+            statusElement.textContent = `Status: ${character.status}`;
+            cardBodyDiv.appendChild(statusElement);
+
+            const speciesElement = document.createElement("p");
+            speciesElement.classList.add("card-text", "mb-1");
+            speciesElement.textContent = `Species: ${character.species}`;
+            cardBodyDiv.appendChild(speciesElement);
+
+            cardDiv.appendChild(cardBodyDiv);
+            cardContainer?.appendChild(cardDiv);
+
+            cardDiv.setAttribute("characterId", `${character.id}`);
+            cardDiv.addEventListener("click", loadCharacter);
+            (cardDiv);
+          })
+          .catch(error => {
+            console.error("Error loading character", error);
+          });
+      });
+    })
+    .catch(error => {
+      console.error("Error loading episode", error);
+    });
+}
+
+function loadCharacter(this: HTMLElement) {
+  clearInfo();
+  (this);
+  const characterId = this.getAttribute("characterId");
+  (this);
+  const urlCharacter: string = `https://rickandmortyapi.com/api/character/${characterId}`;
+  
+  fetch(urlCharacter)
+    .then((response) => response.json())
+    .then((data: Character) => {
+      const infoCharacter = document.querySelector("#sectionInfo");
+      infoCharacter?.classList.add("container-border");
+
+      const cardDiv = document.createElement("div");
+      cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "overflow-auto", "full-heigth");
+      cardDiv.style.maxHeight = "79vh";
+
+      const rowDiv = document.createElement("div");
+      rowDiv.classList.add("row", "g-0", "display-respons");
+      cardDiv.appendChild(rowDiv);
+
+      const imageColDiv = document.createElement("div");
+      imageColDiv.classList.add("col-md-4", "p-3");
+      rowDiv.appendChild(imageColDiv);
+
+      const imageElement = document.createElement("img");
+      imageElement.src = data.image;
+      imageElement.classList.add("img-fluid", "rounded-start");
+      imageElement.alt = "Character Image";
+      imageColDiv.appendChild(imageElement);
+
+      const infoColDiv = document.createElement("div");
+      infoColDiv.classList.add("col-md-8");
+      rowDiv.appendChild(infoColDiv);
+
+      const cardBodyDiv = document.createElement("div");
+      cardBodyDiv.classList.add("card-body", "border-green");
+      infoColDiv.appendChild(cardBodyDiv);
+
+      const titleElement = document.createElement("h5");
+      titleElement.classList.add("card-title", "mb-2", "fs-2", "text-center");
+      titleElement.textContent = data.name;
+      cardBodyDiv.appendChild(titleElement);
+
+      const statusElement = document.createElement("p");
+      statusElement.classList.add("card-text", "fs-3", "text-center");
+      statusElement.textContent = "Status: " + data.status;
+      cardBodyDiv.appendChild(statusElement);
+
+      const speciesElement = document.createElement("p");
+      speciesElement.classList.add("card-text", "fs-3", "text-center");
+      speciesElement.textContent = "Species: " + data.species;
+      cardBodyDiv.appendChild(speciesElement);
+
+      const genderElement = document.createElement("p");
+      genderElement.classList.add("card-text", "fs-3", "text-center");
+      genderElement.textContent = "Gender: " + data.gender;
+      cardBodyDiv.appendChild(genderElement);
+
+      const originElement = document.createElement("p");
+      originElement.classList.add("card-text", "fs-3", "text-center");
+      originElement.textContent = "origin: " + data.origin.name;
+
+      originElement.setAttribute("data-origin-URL", `${data.origin.url}`);
+      if(data.origin.name !== "unknown") {
+      originElement.addEventListener("click", loadOrigin);
+      }
+      cardBodyDiv.appendChild(originElement);
+      infoCharacter?.appendChild(cardDiv);
+
+      const lineDiv = document.createElement("div");
+      lineDiv.classList.add("border-top", "border-warning");
+      cardBodyDiv.appendChild(lineDiv);
+
+      const episodeElement = document.createElement("div");
+      episodeElement.classList.add("grid-display", "display-respons", "size-respons", "display-respons");
+      rowDiv.appendChild(episodeElement);
+
+      const episodes = data.episode;
+
+      episodes.forEach(episodeUrl => {
+        fetch(episodeUrl)
+          .then(response => response.json())
+          .then((episodeData: Episode) => {
+            const elementDiv = document.createElement("div");
+            elementDiv.classList.add("mb-3", "sidebar-lineheight");
+
+            const elementTitle = document.createElement("h5");
+            elementTitle.classList.add("text-center", "text-yellow");
+            elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
+            elementDiv.appendChild(elementTitle);
+      
+            elementDiv.setAttribute("episodeId", `${episodeData.id}`);
+            elementDiv.addEventListener("click", loadEpisode);
+      
+            episodeElement.appendChild(elementDiv);
+          });
+      });
+    });
+}
+
+function loadOrigin(this: HTMLElement) {
+  clearInfo();
+
+  const urlOrigin = this.getAttribute("data-origin-URL");
+console.log(urlOrigin)
+  fetch(`${urlOrigin}`)
+    .then(response => response.json())
+    .then((data: CharacterLocation) => {
+      const infoOrigin = document.querySelector("#sectionInfo");
+      infoOrigin?.classList.add("container-border");
+
+      const episodeHeader = document.createElement("div");
+      episodeHeader.classList.add("episode-header");
+
+      const titleElementEpisode = document.createElement("h2");
+      titleElementEpisode.classList.add("text-yellow");
+      titleElementEpisode.textContent = `${data.name}`;
+      episodeHeader.appendChild(titleElementEpisode);
+
+      const typeElement = document.createElement("h2");
+      typeElement.classList.add("text-yellow");
+      typeElement.textContent = `${data.type}`;
+      episodeHeader.appendChild(typeElement);
+console.log(data.type)
+      infoOrigin?.appendChild(episodeHeader);
+
+      const cardInfoChar = document.createElement("div");
+      cardInfoChar.classList.add("grid-display", "display-respons", "w-100","overflow-auto", "full-heigth");
+      cardInfoChar.style.maxHeight = "73vh";
+      cardInfoChar.setAttribute('id', 'cardContainer');
+      infoOrigin?.appendChild(cardInfoChar);
+console.log(this)
+      const residents: any = data.residents;
+      
+      residents.forEach((residents: string) => {
+        
+        fetch(residents)
+          .then(response => response.json())
+          .then((characterData: Character) => {
+            const character = characterData;
+            const infoEpisode = document.querySelector("#sectionInfo");
+            const cardContainer = document.querySelector("#cardContainer");
+
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
+
+            const imageElement = document.createElement("img");
+            imageElement.src = character.image;
+            imageElement.classList.add("card-img-top", "images-respons");
             imageElement.alt = "Character Image";
             cardDiv.appendChild(imageElement);
 
@@ -173,7 +349,6 @@ function loadEpisode(this: HTMLElement) {
 
             cardDiv.setAttribute("characterId", `${character.id}`);
             cardDiv.addEventListener("click", loadCharacter);
-            console.log(cardDiv);
           })
           .catch(error => {
             console.error("Error loading character", error);
@@ -181,84 +356,25 @@ function loadEpisode(this: HTMLElement) {
       });
     })
     .catch(error => {
-      console.error("Error loading episode", error);
+      console.error("Error loading location", error);
     });
 }
 
-function loadCharacter(this: HTMLElement) {
+function scrollInfinity() {
 
-  clearInfo();
-  console.log(this)
-  const characterId = this.getAttribute("characterId");
-  console.log(this)
-  const urlCharacter: string = `https://rickandmortyapi.com/api/character/${characterId}`;
-  console.log(urlCharacter);
-  fetch(urlCharacter)
-    .then(response => response.json())
-    .then((data: any) => {
-      const infoCharacter = document.querySelector("#sectionInfo");
+  const ulContainerDiv = document.querySelector("#ulContainer");
+  if (ulContainerDiv === null) return;
 
-      const cardDiv = document.createElement("div");
-      cardDiv.classList.add("mb-3", "container-border", "text-yellow", "bg-green");
-  
-      cardDiv.style.maxWidth = "60vw";
+  const scrollTop = ulContainerDiv.scrollTop;
+  const scrollHeight = ulContainerDiv.scrollHeight;
+  const clientHeight = ulContainerDiv.clientHeight;
 
-      const rowDiv = document.createElement("div");
-      rowDiv.classList.add("row", "g-0");
-      cardDiv.appendChild(rowDiv);
-
-      const imageColDiv = document.createElement("div");
-      imageColDiv.classList.add("col-md-4", "p-3");
-      rowDiv.appendChild(imageColDiv);
-
-      const imageElement = document.createElement("img");
-      imageElement.src = data.image;
-      imageElement.classList.add("img-fluid", "rounded-start");
-      imageElement.alt = "Character Image";
-      imageColDiv.appendChild(imageElement);
-
-      const infoColDiv = document.createElement("div");
-      infoColDiv.classList.add("col-md-8");
-      rowDiv.appendChild(infoColDiv);
-
-      const cardBodyDiv = document.createElement("div");
-      cardBodyDiv.classList.add("card-body");
-      infoColDiv.appendChild(cardBodyDiv);
-
-      const titleElement = document.createElement("h5");
-      titleElement.classList.add("card-title", "mb-2", "fs-2", "text-center");
-      titleElement.textContent = data.name;
-      cardBodyDiv.appendChild(titleElement);
-
-      const statusElement = document.createElement("p");
-      statusElement.classList.add("card-text", "fs-3", "text-center");
-      statusElement.textContent = "Status: " + data.status;
-      cardBodyDiv.appendChild(statusElement);
-
-      const speciesElement = document.createElement("p");
-      speciesElement.classList.add("card-text", "fs-3", "text-center");
-      speciesElement.textContent = "Species: " + data.species;
-      cardBodyDiv.appendChild(speciesElement);
-
-      const genderElement = document.createElement("p");
-      genderElement.classList.add("card-text", "fs-3", "text-center");
-      genderElement.textContent = "Gender: " + data.gender;
-      cardBodyDiv.appendChild(genderElement);
-
-      const locationElement = document.createElement("p");
-      locationElement.classList.add("card-text", "fs-3", "text-center");
-      locationElement.textContent = "Location: " + data.location;
-      cardBodyDiv.appendChild(locationElement);
-
-      infoCharacter?.appendChild(cardDiv);
-
-    });
+  if (scrollTop + clientHeight >= scrollHeight - 200 && nextPage !== -1) {
+    loadSideBar();
+  };
 }
-
 
 function clearInfo() {
   const containerInfo1 = document.querySelector("#sectionInfo");
   containerInfo1?.replaceChildren();
-
-
 }
