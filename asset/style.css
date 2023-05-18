@@ -55,8 +55,12 @@ body {
   width: 100vw;
 }
 
-.full-heigth {
-  height: 83vh;
+.full-height {
+  height: 70vh;
+}
+
+.full-character {
+  height: 70vh;
 }
 
 .scroll-size {
@@ -65,8 +69,8 @@ body {
 }
 
 .img-size-button {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 /* CENTERS STYLES */
@@ -81,7 +85,7 @@ body {
   padding-left: 5vw;
 }
 
-/* COLOURS */
+/* COLOURS & POINTER */
 
 .button-style {
   background-color: transparent;
@@ -89,6 +93,14 @@ body {
 
 .text-yellow {
   color: #f0e14a;
+}
+
+.no-cursor {
+  cursor: default;
+}
+
+.cursor-select {
+  cursor: pointer;
 }
 
 .bg-pink {
@@ -128,6 +140,10 @@ body {
 
   .size-respons-card {
     margin: 2vh 0;
+  }
+
+  .full-h-respons {
+    height: 83vh;
   }
 
   /* CENTERS STYLES */
