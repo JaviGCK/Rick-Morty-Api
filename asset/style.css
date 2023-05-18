@@ -5,12 +5,13 @@ body {
 }
 
 /* GENERAL STYLES*/
+.body-wallpaper {
+  background-image: url(/images/tv_show-rick_and_morty-space-812414.jpeg);
+}
 
 @font-face {
   font-family: 'myFont';
-  
   src: url('/fonts/get_schwifty\ 5.ttf'),
-       
        url() format('ttf');
 }
 
@@ -18,34 +19,13 @@ body {
     font-family: 'myFont';
 }
 
-.body-wallpaper {
-  background-image: url(/images/tv_show-rick_and_morty-space-812414.jpeg);
-}
+/* BORDER STYLES */
 
 .container-border {
   margin: 1vw;
   padding: 1vw;
   border: 2px solid #97ce4c;
   border-radius: 15px;
-}
-
-.grid-display {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.scroll {
-  overflow-y: auto;
-}
-
-.text-yellow {
-  color: #f0e14a;
-}
-
-.bg-pink {
-  background-color: #e4a788;
-  opacity: calc(0.9);
 }
 
 .border-card {
@@ -57,80 +37,19 @@ body {
   margin-top: 5vh;
 }
 
-.center-title {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  padding-left: 5vw;
-}
+/* DISPLAYS */
 
-/* SIDEBAR STYLES */
-
-.sidebar-content {
-  height: 70vh;
-}
-
-.sidebar-content-size {
-  height: 70vh;
-}
-
-.sidebar-lineheight {
-  margin-top: 5vh;
-}
-
-.sidebar-scroll-size {
-  height: 65vh;
-  overflow-y: scroll;
-}
-
-/* MAIN-CONTAINER STYLES*/
-
-.main-container-size {
-  height: 90vh;
-
-}
-
-.main-scroll-size {
-  margin-bottom: 2vh;
-}
-
-.grid-container {
+.grid-display {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); 
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  
 }
 
-.card-container {
-  height: 89%;
-}
-
-.card-img-top {
-  width: 100%;
-  height: 20vh;
-  object-fit: cover; 
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold; 
-}
-
-.card-text {
-  font-size: 14px; 
-}
-
-.display {
+.flex-display {
   display: flex;
 }
 
-.button-style {
-  background-color: transparent;
-}
-
-.img-size-button {
-  width: 50px;
-  height: 50px;
-}
+/* SIZES */
 
 .full-width {
   width: 100vw;
@@ -140,11 +59,59 @@ body {
   height: 83vh;
 }
 
+.scroll-size {
+  height: 65vh;
+  overflow-y: scroll;
+}
+
+.img-size-button {
+  width: 50px;
+  height: 50px;
+}
+
+/* CENTERS STYLES */
+
+.mt-divs {
+  margin-top: 5vh;
+}
+
+.center-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 5vw;
+}
+
+/* COLOURS */
+
+.button-style {
+  background-color: transparent;
+}
+
+.text-yellow {
+  color: #f0e14a;
+}
+
+.bg-pink {
+  background-color: #e4a788;
+  opacity: calc(0.9);
+}
+
+/* RESPONSIVE STYLES */
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  /* DISPLAYS */
+
   .display-respons {
     display: block;
   }
 
+  /* SIZES */
+
+  .size-respons-scroll {
+    height: 75vh;
+  }
+  
   .size-respons {
     margin: 3vh 0;
     height: 85vh;
@@ -163,17 +130,10 @@ body {
     margin: 2vh 0;
   }
 
-  .images-respons {
-    height: 30vh;
-  }
+  /* CENTERS STYLES */
 
   .center-title-respons {
     padding-left: 30vw;
-  }
-
-  .display-respons {
-    display: block;
-    width: 87vw;
   }
 
 }

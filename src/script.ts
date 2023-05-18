@@ -1,12 +1,15 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
 
-window.addEventListener("load", loadSideBar);
-let nextPage = 1;
+window.addEventListener("load", loadEpisodeList);
 
-function loadSideBar() {
-  
+/* This function loads a list of episodes and creates a sidebar,
+If the sidebar already has 51 episodes, the function does not perform any further action, if it is empty it makes a request regarding the episodes it already has loaded. */
+
+function loadEpisodeList() {
+
+  let nextPage = 1;
   const urlEpisodes = "https://rickandmortyapi.com/api/episode";
-  const sideBar = document.querySelector("#sideBarContainer");
+  const sideBar = document.querySelector("#side-bar");
   const ul = document.querySelector("#ulList");
 
   if (ul?.childElementCount === 51) return
@@ -25,7 +28,7 @@ function loadSideBar() {
         containerDiv.appendChild(h2);
 
         const ulContainerDiv = document.createElement("div");
-        ulContainerDiv.classList.add("sidebar-scroll-size", "size-respons-scroll");
+        ulContainerDiv.classList.add("scroll-size", "size-respons-scroll");
         ulContainerDiv.setAttribute("id", "ulContainer");
 
         const ul = document.createElement("ul");
@@ -40,7 +43,7 @@ function loadSideBar() {
 
         episodes.forEach(episode => {
           const listElement = document.createElement("li");
-          listElement.classList.add("mb-3", "sidebar-lineheight");
+          listElement.classList.add("mb-3", "mt-divs");
 
           const episodeList = document.createElement("h5");
           episodeList.classList.add("text-center", "text-yellow");
@@ -71,7 +74,7 @@ function loadSideBar() {
 
         episodes.forEach(episode => {
           const listElement = document.createElement("li");
-          listElement.classList.add("mb-3", "sidebar-lineheight");
+          listElement.classList.add("mb-3", "mt-divs");
 
           const episodeList = document.createElement("h5");
           episodeList.classList.add("text-center", "text-yellow");
@@ -87,7 +90,10 @@ function loadSideBar() {
   }
 }
 
+/* This feature loads and displays detailed information for a specific episode. Dynamically create HTML elements to display the episode info, displaying the character details on a card. */
+
 function loadEpisode(this: HTMLElement) {
+
   clearInfo();
 
   const episodeId = this.getAttribute("episodeId");
@@ -97,7 +103,7 @@ function loadEpisode(this: HTMLElement) {
   fetch(urlEpisode)
     .then(response => response.json())
     .then((data: Episode) => {
-      const infoEpisode = document.querySelector("#sectionInfo");
+      const infoEpisode = document.querySelector("#section-info");
       infoEpisode?.classList.add("container-border");
 
       const episodeHeader = document.createElement("div");
@@ -135,7 +141,7 @@ function loadEpisode(this: HTMLElement) {
 
             const imageElement = document.createElement("img");
             imageElement.src = character.image;
-            imageElement.classList.add("card-img-top", "images-respons");
+            imageElement.classList.add("card-img-top",);
             imageElement.alt = "Character Image";
             cardDiv.appendChild(imageElement);
 
@@ -173,6 +179,8 @@ function loadEpisode(this: HTMLElement) {
     });
 }
 
+/*This function loads and displays detailed information for a specific character. Dynamically creates HTML elements to display character information, also displays the episodes the character has appeared in.*/
+
 function loadCharacter(this: HTMLElement) {
   clearInfo();
   (this);
@@ -183,12 +191,11 @@ function loadCharacter(this: HTMLElement) {
   fetch(urlCharacter)
     .then((response) => response.json())
     .then((data: Character) => {
-      const infoCharacter = document.querySelector("#sectionInfo");
+      const infoCharacter = document.querySelector("#section-info");
       infoCharacter?.classList.add("container-border");
 
       const cardDiv = document.createElement("div");
       cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "overflow-auto", "full-heigth");
-      cardDiv.style.maxHeight = "79vh";
 
       const rowDiv = document.createElement("div");
       rowDiv.classList.add("row", "g-0", "display-respons");
@@ -209,7 +216,7 @@ function loadCharacter(this: HTMLElement) {
       rowDiv.appendChild(infoColDiv);
 
       const cardBodyDiv = document.createElement("div");
-      cardBodyDiv.classList.add("card-body", "border-green");
+      cardBodyDiv.classList.add("card-body", "border-bottom", "border-green");
       infoColDiv.appendChild(cardBodyDiv);
 
       const titleElement = document.createElement("h5");
@@ -258,7 +265,7 @@ function loadCharacter(this: HTMLElement) {
           .then(response => response.json())
           .then((episodeData: Episode) => {
             const elementDiv = document.createElement("div");
-            elementDiv.classList.add("mb-3", "sidebar-lineheight");
+            elementDiv.classList.add("mb-3", "mt-divs");
 
             const elementTitle = document.createElement("h5");
             elementTitle.classList.add("text-center", "text-yellow");
@@ -274,6 +281,8 @@ function loadCharacter(this: HTMLElement) {
     });
 }
 
+/*This function loads and displays detailed information for a specific source. Dynamically creates HTML elements a list of associated characters. The characters are displayed in the form of cards.*/
+
 function loadOrigin(this: HTMLElement) {
   clearInfo();
 
@@ -282,7 +291,7 @@ console.log(urlOrigin)
   fetch(`${urlOrigin}`)
     .then(response => response.json())
     .then((data: CharacterLocation) => {
-      const infoOrigin = document.querySelector("#sectionInfo");
+      const infoOrigin = document.querySelector("#section-info");
       infoOrigin?.classList.add("container-border");
 
       const episodeHeader = document.createElement("div");
@@ -314,7 +323,7 @@ console.log(this)
           .then(response => response.json())
           .then((characterData: Character) => {
             const character = characterData;
-            const infoEpisode = document.querySelector("#sectionInfo");
+            const infoEpisode = document.querySelector("#section-info");
             const cardContainer = document.querySelector("#cardContainer");
 
             const cardDiv = document.createElement("div");
@@ -322,7 +331,7 @@ console.log(this)
 
             const imageElement = document.createElement("img");
             imageElement.src = character.image;
-            imageElement.classList.add("card-img-top", "images-respons");
+            imageElement.classList.add("card-img-top",);
             imageElement.alt = "Character Image";
             cardDiv.appendChild(imageElement);
 
@@ -360,8 +369,11 @@ console.log(this)
     });
 }
 
-function scrollInfinity() {
+/* The function checks if the end of the list has been reached. 
+If the above condition is met and a next page is available. */
 
+function scrollInfinity() {
+  let nextPage = 1;
   const ulContainerDiv = document.querySelector("#ulContainer");
   if (ulContainerDiv === null) return;
 
@@ -370,11 +382,13 @@ function scrollInfinity() {
   const clientHeight = ulContainerDiv.clientHeight;
 
   if (scrollTop + clientHeight >= scrollHeight - 200 && nextPage !== -1) {
-    loadSideBar();
+    loadEpisodeList();
   };
 }
 
+/* This function is responsible for cleaning the information section as required */
+
 function clearInfo() {
-  const containerInfo1 = document.querySelector("#sectionInfo");
+  const containerInfo1 = document.querySelector("#section-info");
   containerInfo1?.replaceChildren();
 }

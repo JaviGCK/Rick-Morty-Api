@@ -1,8 +1,8 @@
-window.addEventListener("load", loadSideBar);
-let nextPage = 1;
-function loadSideBar() {
+window.addEventListener("load", loadEpisodeList);
+function loadEpisodeList() {
+    let nextPage = 1;
     const urlEpisodes = "https://rickandmortyapi.com/api/episode";
-    const sideBar = document.querySelector("#sideBarContainer");
+    const sideBar = document.querySelector("#side-bar");
     const ul = document.querySelector("#ulList");
     if ((ul === null || ul === void 0 ? void 0 : ul.childElementCount) === 51)
         return;
@@ -17,7 +17,7 @@ function loadSideBar() {
             h2.textContent = "Episode";
             containerDiv.appendChild(h2);
             const ulContainerDiv = document.createElement("div");
-            ulContainerDiv.classList.add("sidebar-scroll-size", "size-respons-scroll");
+            ulContainerDiv.classList.add("scroll-size", "size-respons-scroll");
             ulContainerDiv.setAttribute("id", "ulContainer");
             const ul = document.createElement("ul");
             ul.classList.add("nav", "flex-column", "sidebar-menu");
@@ -28,7 +28,7 @@ function loadSideBar() {
             const episodes = data.results;
             episodes.forEach(episode => {
                 const listElement = document.createElement("li");
-                listElement.classList.add("mb-3", "sidebar-lineheight");
+                listElement.classList.add("mb-3", "mt-divs");
                 const episodeList = document.createElement("h5");
                 episodeList.classList.add("text-center", "text-yellow");
                 episodeList.textContent = `${episode.id} - ${episode.name}`;
@@ -55,7 +55,7 @@ function loadSideBar() {
             const episodes = data.results;
             episodes.forEach(episode => {
                 const listElement = document.createElement("li");
-                listElement.classList.add("mb-3", "sidebar-lineheight");
+                listElement.classList.add("mb-3", "mt-divs");
                 const episodeList = document.createElement("h5");
                 episodeList.classList.add("text-center", "text-yellow");
                 episodeList.textContent = `${episode.id} - ${episode.name}`;
@@ -74,7 +74,7 @@ function loadEpisode() {
     fetch(urlEpisode)
         .then(response => response.json())
         .then((data) => {
-        const infoEpisode = document.querySelector("#sectionInfo");
+        const infoEpisode = document.querySelector("#section-info");
         infoEpisode === null || infoEpisode === void 0 ? void 0 : infoEpisode.classList.add("container-border");
         const episodeHeader = document.createElement("div");
         episodeHeader.classList.add("episode-header");
@@ -103,7 +103,7 @@ function loadEpisode() {
                 cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
                 const imageElement = document.createElement("img");
                 imageElement.src = character.image;
-                imageElement.classList.add("card-img-top", "images-respons");
+                imageElement.classList.add("card-img-top");
                 imageElement.alt = "Character Image";
                 cardDiv.appendChild(imageElement);
                 const cardBodyDiv = document.createElement("div");
@@ -144,11 +144,10 @@ function loadCharacter() {
     fetch(urlCharacter)
         .then((response) => response.json())
         .then((data) => {
-        const infoCharacter = document.querySelector("#sectionInfo");
+        const infoCharacter = document.querySelector("#section-info");
         infoCharacter === null || infoCharacter === void 0 ? void 0 : infoCharacter.classList.add("container-border");
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "overflow-auto", "full-heigth");
-        cardDiv.style.maxHeight = "79vh";
         const rowDiv = document.createElement("div");
         rowDiv.classList.add("row", "g-0", "display-respons");
         cardDiv.appendChild(rowDiv);
@@ -164,7 +163,7 @@ function loadCharacter() {
         infoColDiv.classList.add("col-md-8");
         rowDiv.appendChild(infoColDiv);
         const cardBodyDiv = document.createElement("div");
-        cardBodyDiv.classList.add("card-body", "border-green");
+        cardBodyDiv.classList.add("card-body", "border-bottom", "border-green");
         infoColDiv.appendChild(cardBodyDiv);
         const titleElement = document.createElement("h5");
         titleElement.classList.add("card-title", "mb-2", "fs-2", "text-center");
@@ -203,7 +202,7 @@ function loadCharacter() {
                 .then(response => response.json())
                 .then((episodeData) => {
                 const elementDiv = document.createElement("div");
-                elementDiv.classList.add("mb-3", "sidebar-lineheight");
+                elementDiv.classList.add("mb-3", "mt-divs");
                 const elementTitle = document.createElement("h5");
                 elementTitle.classList.add("text-center", "text-yellow");
                 elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
@@ -222,7 +221,7 @@ function loadOrigin() {
     fetch(`${urlOrigin}`)
         .then(response => response.json())
         .then((data) => {
-        const infoOrigin = document.querySelector("#sectionInfo");
+        const infoOrigin = document.querySelector("#section-info");
         infoOrigin === null || infoOrigin === void 0 ? void 0 : infoOrigin.classList.add("container-border");
         const episodeHeader = document.createElement("div");
         episodeHeader.classList.add("episode-header");
@@ -248,13 +247,13 @@ function loadOrigin() {
                 .then(response => response.json())
                 .then((characterData) => {
                 const character = characterData;
-                const infoEpisode = document.querySelector("#sectionInfo");
+                const infoEpisode = document.querySelector("#section-info");
                 const cardContainer = document.querySelector("#cardContainer");
                 const cardDiv = document.createElement("div");
                 cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
                 const imageElement = document.createElement("img");
                 imageElement.src = character.image;
-                imageElement.classList.add("card-img-top", "images-respons");
+                imageElement.classList.add("card-img-top");
                 imageElement.alt = "Character Image";
                 cardDiv.appendChild(imageElement);
                 const cardBodyDiv = document.createElement("div");
@@ -286,6 +285,7 @@ function loadOrigin() {
     });
 }
 function scrollInfinity() {
+    let nextPage = 1;
     const ulContainerDiv = document.querySelector("#ulContainer");
     if (ulContainerDiv === null)
         return;
@@ -293,12 +293,12 @@ function scrollInfinity() {
     const scrollHeight = ulContainerDiv.scrollHeight;
     const clientHeight = ulContainerDiv.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight - 200 && nextPage !== -1) {
-        loadSideBar();
+        loadEpisodeList();
     }
     ;
 }
 function clearInfo() {
-    const containerInfo1 = document.querySelector("#sectionInfo");
+    const containerInfo1 = document.querySelector("#section-info");
     containerInfo1 === null || containerInfo1 === void 0 ? void 0 : containerInfo1.replaceChildren();
 }
 export {};
