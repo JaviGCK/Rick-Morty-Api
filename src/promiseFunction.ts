@@ -1,5 +1,5 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
-import { setSideBar, createList, setContainerInfo, createCardsInfo, setSectionInfo, createCharcacterInfo } from "./setHTML.js";
+import { setSideBar, createList, setContainerInfo, createCardsInfo, setSectionInfo, createCharcacterInfo, createEpisodeCharacter } from "./setHTML.js";
 import { clearInfo } from "./utils.js";
 /**
  * 
@@ -8,7 +8,7 @@ import { clearInfo } from "./utils.js";
 
 export function setEpisodeList(): void {
     clearInfo();
-    const urlEpisodes: string = "https://rickandmortyapi.com/api/episode";
+    
     const sideBarAside: (HTMLElement | null) = document.querySelector("#side-bar");
     const sideBarDivUl: (HTMLDivElement | null) = document.createElement("div");
     const sideBarUl: (HTMLUListElement | null) = document.querySelector("#ul-list");
@@ -37,7 +37,7 @@ export function setEpisodeList(): void {
 
 
 export function loadEpisode(this: HTMLElement) {
-
+    console.log("hola epio");
     const episodeId = this.getAttribute("episodeId");
     const urlEpisode: string = `https://rickandmortyapi.com/api/episode/${episodeId}`;
     fetch(urlEpisode)
@@ -46,8 +46,9 @@ export function loadEpisode(this: HTMLElement) {
 
             setContainerInfo(data);
 
+            const episodes = data.episode;
             const characterURLs: string[] = data.characters;
-            console.log(characterURLs)
+            
             characterURLs.forEach((characterURL: string) => {
                 fetch(characterURL)
                     .then(response => response.json())
@@ -77,14 +78,14 @@ export function loadCharacter(this: HTMLElement) {
         .then((data: Character) => {
 
             createCharcacterInfo(data);
-
+            
             const episodes = data.episode;
 
             episodes.forEach(episodeUrl => {
                 fetch(episodeUrl)
                     .then(response => response.json())
                     .then((data: Episode) => {
-
+                        createEpisodeCharacter(data);
                     });
             });
         });

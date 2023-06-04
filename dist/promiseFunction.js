@@ -1,8 +1,7 @@
-import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo } from "./setHTML.js";
+import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo, createEpisodeCharacter } from "./setHTML.js";
 import { clearInfo } from "./utils.js";
 export function setEpisodeList() {
     clearInfo();
-    const urlEpisodes = "https://rickandmortyapi.com/api/episode";
     const sideBarAside = document.querySelector("#side-bar");
     const sideBarDivUl = document.createElement("div");
     const sideBarUl = document.querySelector("#ul-list");
@@ -29,14 +28,15 @@ export function setEpisodeList() {
     });
 }
 export function loadEpisode() {
+    console.log("hola epio");
     const episodeId = this.getAttribute("episodeId");
     const urlEpisode = `https://rickandmortyapi.com/api/episode/${episodeId}`;
     fetch(urlEpisode)
         .then(response => response.json())
         .then((data) => {
         setContainerInfo(data);
+        const episodes = data.episode;
         const characterURLs = data.characters;
-        console.log(characterURLs);
         characterURLs.forEach((characterURL) => {
             fetch(characterURL)
                 .then(response => response.json())
@@ -59,6 +59,7 @@ export function loadCharacter() {
             fetch(episodeUrl)
                 .then(response => response.json())
                 .then((data) => {
+                createEpisodeCharacter(data);
             });
         });
     });
