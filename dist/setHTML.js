@@ -1,5 +1,5 @@
-import { setEpisodeList, loadEpisode, loadCharacter } from "./promiseFunction.js";
-import { clearInfo, scrollInfinity } from "./utils.js";
+import { setEpisodeList, loadEpisode, loadCharacter, loadOrigin } from "./promiseFunction.js";
+import { scrollInfinity } from "./utils.js";
 export function setHeaderContainer() {
     const body = document.querySelector("body");
     const headerNav = document.createElement("nav");
@@ -52,7 +52,6 @@ function setMainContainer() {
     setSectionInfo();
 }
 export function setSideBar() {
-    clearInfo();
     const main = document.querySelector("main");
     const sideBarAside = document.createElement("div");
     const sideBarDiv = document.createElement("div");
@@ -121,7 +120,6 @@ export function setSectionInfo() {
     main.appendChild(sectionInfo);
 }
 export function setContainerInfo(data) {
-    clearInfo();
     const sectionInfo = document.querySelector("#section-info");
     const sectionInfoHeaderDiv = document.createElement("div");
     const sectionInfoHeaderTitleEpisode = document.createElement("h2");
@@ -151,7 +149,6 @@ export function setContainerInfo(data) {
     sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitleAirData);
 }
 export function createCardsInfo(characterData) {
-    console.log("cards");
     const sectionCardDiv = document.querySelector("#section-card-div");
     const cardDiv = document.createElement("div");
     const cardDivImg = document.createElement("img");
@@ -194,7 +191,6 @@ export function createCardsInfo(characterData) {
     cardDiv.addEventListener("click", loadCharacter);
 }
 export function createCharcacterInfo(data) {
-    clearInfo();
     const sectionInfo = document.querySelector("#section-info");
     const sectionInfoContainerDiv = document.createElement("div");
     const sectionInfoDivRow = document.createElement("div");
@@ -246,6 +242,9 @@ export function createCharcacterInfo(data) {
     sectionInfoBodyDiv.appendChild(sectionInfoOrigin);
     sectionInfoBodyDiv.appendChild(sectionInfoLineDiv);
     sectionInfoDivRow.appendChild(sectionInfoEpisodes);
+    if (data.origin.name !== "unknown") {
+        sectionInfoOrigin.addEventListener("click", loadOrigin);
+    }
 }
 export function createEpisodeCharacter(episodeData) {
     const sectionInfoEpisodes = document.querySelector("#section-info-episodes");
@@ -260,5 +259,58 @@ export function createEpisodeCharacter(episodeData) {
     elementDiv.appendChild(elementTitle);
     sectionInfoEpisodes.appendChild(elementDiv);
     elementDiv.addEventListener("click", loadEpisode);
+}
+export function createOriginInfo(data) {
+    const sectionInfo = document.querySelector("#section-info");
+    const sectionInfoHeaderDiv = document.createElement("div");
+    const sectionInfoHeaderTitle = document.createElement("h2");
+    const sectionInfoHeaderType = document.createElement("h2");
+    const sectionResident = document.createElement("div");
+    if (sectionInfo === null)
+        return;
+    sectionInfo.classList.add("container-border");
+    sectionInfoHeaderDiv.classList.add("episode-header", "no-cursor");
+    sectionInfoHeaderTitle.classList.add("text-yellow");
+    sectionInfoHeaderType.classList.add("text-yellow");
+    sectionResident.setAttribute("id", "section-resident");
+    sectionResident.classList.add("grid-display", "display-respons", "w-100", "overflow-auto", "full-height", "cursor-select");
+    sectionResident.style.maxHeight = "73vh";
+    sectionInfoHeaderTitle.innerText = `${data.name}`;
+    sectionInfoHeaderType.innerText = `${data.type}`;
+    sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitle);
+    sectionInfoHeaderDiv.appendChild(sectionInfoHeaderType);
+    sectionInfo.appendChild(sectionInfoHeaderDiv);
+    sectionInfo.appendChild(sectionResident);
+}
+export function setResidents(characterData) {
+    const character = characterData;
+    const sectionResident = document.querySelector("#section-resident");
+    const sectionResidentDiv = document.createElement("div");
+    const sectionResidentImg = document.createElement("img");
+    const sectionResidentBodyDiv = document.createElement("div");
+    const sectionResidentTitle = document.createElement("h5");
+    const sectionResidentStatus = document.createElement("p");
+    const sectionResidentSpecies = document.createElement("p");
+    if (sectionResident === null)
+        return;
+    sectionResidentDiv.setAttribute("characterId", `${character.id}`);
+    sectionResidentDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
+    sectionResidentImg.src = character.image;
+    sectionResidentImg.alt = "Character Image";
+    sectionResidentImg.classList.add("card-img-top");
+    sectionResidentBodyDiv.classList.add("card-body");
+    sectionResidentTitle.classList.add("card-title", "mt-2");
+    sectionResidentStatus.classList.add("card-text", "mt-2");
+    sectionResidentSpecies.classList.add("card-text", "mb-1");
+    sectionResidentTitle.innerText = `${character.name}`;
+    sectionResidentStatus.innerText = `Status: ${character.status}`;
+    sectionResidentSpecies.innerText = `Species: ${character.species}`;
+    sectionResident.appendChild(sectionResidentDiv);
+    sectionResidentDiv.appendChild(sectionResidentBodyDiv);
+    sectionResidentDiv.appendChild(sectionResidentImg);
+    sectionResidentBodyDiv.appendChild(sectionResidentTitle);
+    sectionResidentBodyDiv.appendChild(sectionResidentStatus);
+    sectionResidentBodyDiv.appendChild(sectionResidentSpecies);
+    sectionResidentDiv.addEventListener("click", loadCharacter);
 }
 //# sourceMappingURL=setHTML.js.map

@@ -1,5 +1,5 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
-import { setEpisodeList, loadEpisode, loadCharacter } from "./promiseFunction.js";
+import { setEpisodeList, loadEpisode, loadCharacter, loadOrigin } from "./promiseFunction.js";
 import { clearInfo, scrollInfinity } from "./utils.js";
 
 /**
@@ -74,7 +74,7 @@ function setMainContainer(): void {
  * here i have a side bar to create all elements to use for the list episodes, its function calls a function to call the api from promise
  */
 export function setSideBar(): void {
-  clearInfo();
+  
 
   const main: (HTMLElement | null) = document.querySelector("main");
   const sideBarAside: (HTMLElement | null) = document.createElement("div");
@@ -171,7 +171,7 @@ export function setSectionInfo(): void {
  */
 export function setContainerInfo(data: Episode) {
 
-  clearInfo();
+  
 
   const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
   const sectionInfoHeaderDiv: (HTMLDivElement | null) = document.createElement("div");
@@ -203,7 +203,9 @@ export function setContainerInfo(data: Episode) {
 }
 
 export function createCardsInfo(characterData: Character) {
-  console.log("cards");
+
+  
+
   const sectionCardDiv: (HTMLElement | null) = document.querySelector("#section-card-div");
   const cardDiv: (HTMLDivElement | null) = document.createElement("div");
   const cardDivImg: (HTMLImageElement | null) = document.createElement("img");
@@ -245,12 +247,12 @@ export function createCardsInfo(characterData: Character) {
 
 
   cardDiv.addEventListener("click", loadCharacter);
-  
+
 }
 /** fixed this part of code*/
 export function createCharcacterInfo(data: Character) {
 
-  clearInfo();
+  
 
   const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
   const sectionInfoContainerDiv = document.createElement("div");
@@ -308,60 +310,102 @@ export function createCharcacterInfo(data: Character) {
   sectionInfoBodyDiv.appendChild(sectionInfoLineDiv);
   sectionInfoDivRow.appendChild(sectionInfoEpisodes);
 
-  //if (data.origin.name !== "unknown") {
-  //sectionInfoOrigin.addEventListener("click", loadOrigin);
-  // }
+  if (data.origin.name !== "unknown") {
+    sectionInfoOrigin.addEventListener("click", loadOrigin);
+  }
 
-  
+
 }
 
 export function createEpisodeCharacter(episodeData: Episode) {
+
+  
+
   const sectionInfoEpisodes = document.querySelector("#section-info-episodes");
   const elementDiv = document.createElement("div");
-            const elementTitle = document.createElement("h5");
+  const elementTitle = document.createElement("h5");
 
-            if(sectionInfoEpisodes === null) return;
+  if (sectionInfoEpisodes === null) return;
 
-            elementDiv.setAttribute("episodeId", `${episodeData.id}`);
+  elementDiv.setAttribute("episodeId", `${episodeData.id}`);
 
-            elementDiv.classList.add("mb-3", "mt-divs");
-            elementTitle.classList.add("text-center", "text-yellow");
+  elementDiv.classList.add("mb-3", "mt-divs");
+  elementTitle.classList.add("text-center", "text-yellow");
 
-            elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
-            
-            elementDiv.appendChild(elementTitle);
-            sectionInfoEpisodes.appendChild(elementDiv);
+  elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
 
-            elementDiv.addEventListener("click", loadEpisode);
+  elementDiv.appendChild(elementTitle);
+  sectionInfoEpisodes.appendChild(elementDiv);
+
+  elementDiv.addEventListener("click", loadEpisode);
 }
 
 
-/**
- * 
-      const episodes = data.episode;
+export function createOriginInfo(data: CharacterLocation) {
 
-      episodes.forEach(episodeUrl => {
-        fetch(episodeUrl)
-          .then(response => response.json())
-          .then((episodeData: Episode) => {
+  
 
-            const elementDiv = document.createElement("div");
-            const elementTitle = document.createElement("h5");
+  const sectionInfo = document.querySelector("#section-info");
+  const sectionInfoHeaderDiv = document.createElement("div");
+  const sectionInfoHeaderTitle = document.createElement("h2");
+  const sectionInfoHeaderType = document.createElement("h2");
+  const sectionResident = document.createElement("div");
 
-            elementDiv.setAttribute("episodeId", `${episodeData.id}`);
+  if (sectionInfo === null) return;
 
-            elementDiv.classList.add("mb-3", "mt-divs");
-            elementTitle.classList.add("text-center", "text-yellow");
+  sectionInfo.classList.add("container-border");
+  sectionInfoHeaderDiv.classList.add("episode-header", "no-cursor");
+  sectionInfoHeaderTitle.classList.add("text-yellow");
+  sectionInfoHeaderType.classList.add("text-yellow");
+  sectionResident.setAttribute("id", "section-resident");
+  sectionResident.classList.add("grid-display", "display-respons", "w-100", "overflow-auto", "full-height", "cursor-select");
+  sectionResident.style.maxHeight = "73vh";
 
-            elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
-            
-            elementDiv.appendChild(elementTitle);
-            episodeElement.appendChild(elementDiv);
+  sectionInfoHeaderTitle.innerText = `${data.name}`;
+  sectionInfoHeaderType.innerText = `${data.type}`;
 
-            elementDiv.addEventListener("click", loadEpisode);
-          });
-      });
-    });
+  sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitle);
+  sectionInfoHeaderDiv.appendChild(sectionInfoHeaderType);
+  sectionInfo.appendChild(sectionInfoHeaderDiv);
+  sectionInfo.appendChild(sectionResident);
 }
-*/
+
+export function setResidents(characterData: Character) {
+  
+
+  const character = characterData;
+
+  const sectionResident = document.querySelector("#section-resident");
+  const sectionResidentDiv = document.createElement("div");
+  const sectionResidentImg = document.createElement("img");
+  const sectionResidentBodyDiv = document.createElement("div");
+  const sectionResidentTitle = document.createElement("h5");
+  const sectionResidentStatus = document.createElement("p");
+  const sectionResidentSpecies = document.createElement("p");
+
+  if (sectionResident === null) return;
+
+  sectionResidentDiv.setAttribute("characterId", `${character.id}`);
+  sectionResidentDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
+  sectionResidentImg.src = character.image;
+  sectionResidentImg.alt = "Character Image";
+  sectionResidentImg.classList.add("card-img-top",);
+  sectionResidentBodyDiv.classList.add("card-body");
+  sectionResidentTitle.classList.add("card-title", "mt-2");
+  sectionResidentStatus.classList.add("card-text", "mt-2");
+  sectionResidentSpecies.classList.add("card-text", "mb-1");
+
+  sectionResidentTitle.innerText = `${character.name}`;
+  sectionResidentStatus.innerText = `Status: ${character.status}`;
+  sectionResidentSpecies.innerText = `Species: ${character.species}`;
+
+  sectionResident.appendChild(sectionResidentDiv);
+  sectionResidentDiv.appendChild(sectionResidentBodyDiv);
+  sectionResidentDiv.appendChild(sectionResidentImg);
+  sectionResidentBodyDiv.appendChild(sectionResidentTitle);
+  sectionResidentBodyDiv.appendChild(sectionResidentStatus);
+  sectionResidentBodyDiv.appendChild(sectionResidentSpecies);
+
+  sectionResidentDiv.addEventListener("click", loadCharacter);
+}
 

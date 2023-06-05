@@ -1,5 +1,5 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
-import { setSideBar, createList, setContainerInfo, createCardsInfo, setSectionInfo, createCharcacterInfo, createEpisodeCharacter } from "./setHTML.js";
+import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo, createEpisodeCharacter, createOriginInfo, setResidents } from "./setHTML.js";
 import { clearInfo } from "./utils.js";
 /**
  * 
@@ -7,8 +7,7 @@ import { clearInfo } from "./utils.js";
  */
 
 export function setEpisodeList(): void {
-    clearInfo();
-    
+
     const sideBarAside: (HTMLElement | null) = document.querySelector("#side-bar");
     const sideBarDivUl: (HTMLDivElement | null) = document.createElement("div");
     const sideBarUl: (HTMLUListElement | null) = document.querySelector("#ul-list");
@@ -29,15 +28,19 @@ export function setEpisodeList(): void {
         .then(response => response.json())
         .then((data: Episodes) => {
             createList(data);
+        })
+        .catch(error => {
+            console.error("Error loading Episodes", error);
         });
-
 }
 
 
 
 
 export function loadEpisode(this: HTMLElement) {
-    console.log("hola epio");
+
+    clearInfo();
+
     const episodeId = this.getAttribute("episodeId");
     const urlEpisode: string = `https://rickandmortyapi.com/api/episode/${episodeId}`;
     fetch(urlEpisode)
@@ -48,28 +51,29 @@ export function loadEpisode(this: HTMLElement) {
 
             const episodes = data.episode;
             const characterURLs: string[] = data.characters;
-            
+
             characterURLs.forEach((characterURL: string) => {
                 fetch(characterURL)
                     .then(response => response.json())
                     .then((data: Character) => {
                         createCardsInfo(data);
-
-
-
+                    })
+                    .catch(error => {
+                        console.error("Error loading Episode", error);
                     });
-
             })
         })
+        .catch(error => {
+            console.error("Error loading Character", error);
+        });
 }
 
 
 export function loadCharacter(this: HTMLElement) {
 
-
     clearInfo();
-    const characterId = this.getAttribute("characterId");
 
+    const characterId = this.getAttribute("characterId");
 
     const urlCharacter: string = `https://rickandmortyapi.com/api/character/${characterId}`;
 
@@ -78,7 +82,7 @@ export function loadCharacter(this: HTMLElement) {
         .then((data: Character) => {
 
             createCharcacterInfo(data);
-            
+
             const episodes = data.episode;
 
             episodes.forEach(episodeUrl => {
@@ -86,7 +90,43 @@ export function loadCharacter(this: HTMLElement) {
                     .then(response => response.json())
                     .then((data: Episode) => {
                         createEpisodeCharacter(data);
+                    })
+                    .catch(error => {
+                        console.error("Error loading Character", error);
                     });
             });
+        })
+        .catch(error => {
+            console.error("Error loading Episode", error);
+        });
+}
+
+
+export function loadOrigin(this: HTMLElement) {
+
+    clearInfo();
+
+    const urlOrigin = this.getAttribute("data-origin-URL");
+
+    fetch(`${urlOrigin}`)
+        .then(response => response.json())
+        .then((data: CharacterLocation) => {
+            createOriginInfo(data);
+
+
+            const residents = data.residents
+            residents.forEach((residents: string) => {
+                fetch(residents)
+                    .then(response => response.json())
+                    .then((characterData: Character) => {
+                        setResidents(characterData);
+                    })
+                    .catch(error => {
+                        console.error("Error loading character", error);
+                    });
+            });
+        })
+        .catch(error => {
+            console.error("Error loading location", error);
         });
 }

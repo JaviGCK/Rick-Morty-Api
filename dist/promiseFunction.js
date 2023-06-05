@@ -1,7 +1,6 @@
-import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo, createEpisodeCharacter } from "./setHTML.js";
+import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo, createEpisodeCharacter, createOriginInfo, setResidents } from "./setHTML.js";
 import { clearInfo } from "./utils.js";
 export function setEpisodeList() {
-    clearInfo();
     const sideBarAside = document.querySelector("#side-bar");
     const sideBarDivUl = document.createElement("div");
     const sideBarUl = document.querySelector("#ul-list");
@@ -25,10 +24,13 @@ export function setEpisodeList() {
         .then(response => response.json())
         .then((data) => {
         createList(data);
+    })
+        .catch(error => {
+        console.error("Error loading Episodes", error);
     });
 }
 export function loadEpisode() {
-    console.log("hola epio");
+    clearInfo();
     const episodeId = this.getAttribute("episodeId");
     const urlEpisode = `https://rickandmortyapi.com/api/episode/${episodeId}`;
     fetch(urlEpisode)
@@ -42,8 +44,14 @@ export function loadEpisode() {
                 .then(response => response.json())
                 .then((data) => {
                 createCardsInfo(data);
+            })
+                .catch(error => {
+                console.error("Error loading Episode", error);
             });
         });
+    })
+        .catch(error => {
+        console.error("Error loading Character", error);
     });
 }
 export function loadCharacter() {
@@ -60,8 +68,37 @@ export function loadCharacter() {
                 .then(response => response.json())
                 .then((data) => {
                 createEpisodeCharacter(data);
+            })
+                .catch(error => {
+                console.error("Error loading Character", error);
             });
         });
+    })
+        .catch(error => {
+        console.error("Error loading Episode", error);
+    });
+}
+export function loadOrigin() {
+    clearInfo();
+    const urlOrigin = this.getAttribute("data-origin-URL");
+    fetch(`${urlOrigin}`)
+        .then(response => response.json())
+        .then((data) => {
+        createOriginInfo(data);
+        const residents = data.residents;
+        residents.forEach((residents) => {
+            fetch(residents)
+                .then(response => response.json())
+                .then((characterData) => {
+                setResidents(characterData);
+            })
+                .catch(error => {
+                console.error("Error loading character", error);
+            });
+        });
+    })
+        .catch(error => {
+        console.error("Error loading location", error);
     });
 }
 //# sourceMappingURL=promiseFunction.js.map
