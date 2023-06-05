@@ -1,4 +1,4 @@
-import { setEpisodeList, loadEpisode, loadCharacter, loadOrigin } from "./promiseFunction.js";
+import { loadEpisodesList, loadEpisode, loadCharacter, loadOrigin } from "./fetchApi.js";
 import { scrollInfinity } from "./utils.js";
 export function setHeaderContainer() {
     const body = document.querySelector("body");
@@ -53,8 +53,9 @@ function setMainContainer() {
 }
 export function setSideBar() {
     const main = document.querySelector("main");
-    const sideBarAside = document.createElement("div");
+    const sideBarAside = document.createElement("aside");
     const sideBarDiv = document.createElement("div");
+    const sideBarHeaderDiv = document.createElement("div");
     const sideBarDivTitle = document.createElement("h2");
     const sideBarDivUl = document.createElement("div");
     const sideBarUlList = document.createElement("ul");
@@ -64,15 +65,19 @@ export function setSideBar() {
         return;
     if (sideBarDiv === null)
         return;
+    if (sideBarHeaderDiv === null)
+        return;
     if (sideBarDivTitle === null)
         return;
     if (sideBarDivUl === null)
         return;
     if (sideBarUlList === null)
         return;
-    sideBarAside.classList.add("container-border");
     sideBarAside.setAttribute("id", "side-bar");
-    sideBarDiv.classList.add("container-fluid");
+    sideBarAside.classList.add("w-25", "h-50");
+    sideBarDiv.setAttribute("id", "collapse-side-bar");
+    sideBarDiv.classList.add("container-border", "size-respons");
+    sideBarHeaderDiv.classList.add("container-fluid");
     sideBarDivTitle.classList.add("text-center", "mt-4", "text-yellow", "no-cursor");
     sideBarDivUl.classList.add("scroll-size", "size-respons-scroll");
     sideBarDivUl.setAttribute("id", "ulContainer");
@@ -81,13 +86,14 @@ export function setSideBar() {
     sideBarDivTitle.innerText = "Episode";
     main.appendChild(sideBarAside);
     sideBarAside.appendChild(sideBarDiv);
-    sideBarDiv.appendChild(sideBarDivTitle);
-    sideBarAside.appendChild(sideBarDivUl);
+    sideBarDiv.appendChild(sideBarHeaderDiv);
+    sideBarHeaderDiv.appendChild(sideBarDivTitle);
+    sideBarDiv.appendChild(sideBarDivUl);
     sideBarDivUl.appendChild(sideBarUlList);
-    setEpisodeList();
+    loadEpisodesList();
     sideBarDivUl.addEventListener("scroll", scrollInfinity);
 }
-export function createList(data) {
+export function setList(data) {
     const sideBarUl = document.querySelector("#ul-list");
     if (sideBarUl === null)
         return;
@@ -117,6 +123,7 @@ export function setSectionInfo() {
     if (sectionInfo === null)
         return;
     sectionInfo.setAttribute("id", "section-info");
+    sectionInfo.classList.add("h-75");
     main.appendChild(sectionInfo);
 }
 export function setContainerInfo(data) {
@@ -148,7 +155,7 @@ export function setContainerInfo(data) {
     sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitleEpisode);
     sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitleAirData);
 }
-export function createCardsInfo(characterData) {
+export function setCardsInfo(characterData) {
     const sectionCardDiv = document.querySelector("#section-card-div");
     const cardDiv = document.createElement("div");
     const cardDivImg = document.createElement("img");
@@ -190,7 +197,7 @@ export function createCardsInfo(characterData) {
     cardDiv.appendChild(cardDivBody);
     cardDiv.addEventListener("click", loadCharacter);
 }
-export function createCharcacterInfo(data) {
+export function setCharcacterInfo(data) {
     const sectionInfo = document.querySelector("#section-info");
     const sectionInfoContainerDiv = document.createElement("div");
     const sectionInfoDivRow = document.createElement("div");
@@ -206,6 +213,32 @@ export function createCharcacterInfo(data) {
     const sectionInfoLineDiv = document.createElement("div");
     const sectionInfoEpisodes = document.createElement("div");
     if (sectionInfo === null)
+        return;
+    if (sectionInfoContainerDiv === null)
+        return;
+    if (sectionInfoDivRow === null)
+        return;
+    if (sectionInfoDivCol === null)
+        return;
+    if (sectionInfoImg === null)
+        return;
+    if (sectionInfoColDiv === null)
+        return;
+    if (sectionInfoBodyDiv === null)
+        return;
+    if (sectionInfoTitle === null)
+        return;
+    if (sectionInfoStatus === null)
+        return;
+    if (sectionInfoSpecies === null)
+        return;
+    if (sectionInfoGender === null)
+        return;
+    if (sectionInfoOrigin === null)
+        return;
+    if (sectionInfoLineDiv === null)
+        return;
+    if (sectionInfoEpisodes === null)
         return;
     sectionInfoImg.src = data.image;
     sectionInfoImg.alt = "Character Image";
@@ -246,27 +279,39 @@ export function createCharcacterInfo(data) {
         sectionInfoOrigin.addEventListener("click", loadOrigin);
     }
 }
-export function createEpisodeCharacter(episodeData) {
+export function setEpisodeCharacter(episodeData) {
     const sectionInfoEpisodes = document.querySelector("#section-info-episodes");
-    const elementDiv = document.createElement("div");
-    const elementTitle = document.createElement("h5");
+    const sectionInfoEpisodesDiv = document.createElement("div");
+    const sectionInfoEpisodesTitle = document.createElement("h5");
     if (sectionInfoEpisodes === null)
         return;
-    elementDiv.setAttribute("episodeId", `${episodeData.id}`);
-    elementDiv.classList.add("mb-3", "mt-divs");
-    elementTitle.classList.add("text-center", "text-yellow");
-    elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
-    elementDiv.appendChild(elementTitle);
-    sectionInfoEpisodes.appendChild(elementDiv);
-    elementDiv.addEventListener("click", loadEpisode);
+    if (sectionInfoEpisodesDiv === null)
+        return;
+    if (sectionInfoEpisodesTitle === null)
+        return;
+    sectionInfoEpisodesDiv.setAttribute("episodeId", `${episodeData.id}`);
+    sectionInfoEpisodesDiv.classList.add("mb-3", "mt-divs");
+    sectionInfoEpisodesTitle.classList.add("text-center", "text-yellow");
+    sectionInfoEpisodesTitle.innerText = `${episodeData.id} - ${episodeData.name}`;
+    sectionInfoEpisodes.appendChild(sectionInfoEpisodesDiv);
+    sectionInfoEpisodesDiv.appendChild(sectionInfoEpisodesTitle);
+    sectionInfoEpisodesDiv.addEventListener("click", loadEpisode);
 }
-export function createOriginInfo(data) {
+export function setOriginInfo(data) {
     const sectionInfo = document.querySelector("#section-info");
     const sectionInfoHeaderDiv = document.createElement("div");
     const sectionInfoHeaderTitle = document.createElement("h2");
     const sectionInfoHeaderType = document.createElement("h2");
     const sectionResident = document.createElement("div");
     if (sectionInfo === null)
+        return;
+    if (sectionInfoHeaderDiv === null)
+        return;
+    if (sectionInfoHeaderTitle === null)
+        return;
+    if (sectionInfoHeaderType === null)
+        return;
+    if (sectionResident === null)
         return;
     sectionInfo.classList.add("container-border");
     sectionInfoHeaderDiv.classList.add("episode-header", "no-cursor");
@@ -283,7 +328,6 @@ export function createOriginInfo(data) {
     sectionInfo.appendChild(sectionResident);
 }
 export function setResidents(characterData) {
-    const character = characterData;
     const sectionResident = document.querySelector("#section-resident");
     const sectionResidentDiv = document.createElement("div");
     const sectionResidentImg = document.createElement("img");
@@ -291,7 +335,20 @@ export function setResidents(characterData) {
     const sectionResidentTitle = document.createElement("h5");
     const sectionResidentStatus = document.createElement("p");
     const sectionResidentSpecies = document.createElement("p");
+    const character = characterData;
     if (sectionResident === null)
+        return;
+    if (sectionResidentDiv === null)
+        return;
+    if (sectionResidentImg === null)
+        return;
+    if (sectionResidentBodyDiv === null)
+        return;
+    if (sectionResidentTitle === null)
+        return;
+    if (sectionResidentStatus === null)
+        return;
+    if (sectionResidentSpecies === null)
         return;
     sectionResidentDiv.setAttribute("characterId", `${character.id}`);
     sectionResidentDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");

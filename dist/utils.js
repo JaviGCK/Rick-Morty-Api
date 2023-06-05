@@ -1,4 +1,4 @@
-import { setEpisodeList } from "./promiseFunction.js";
+import { loadEpisodesList } from "./fetchApi.js";
 export function clearInfo() {
     const sectionInfo = document.querySelector("#section-info");
     if (sectionInfo === null)
@@ -14,8 +14,9 @@ export function scrollInfinity() {
     const scrollHeight = sideBarUl.scrollHeight;
     const clientHeight = sideBarUl.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight - 200 && sideBarUl.childElementCount !== 51) {
-        setEpisodeList();
+        loadEpisodesList();
     }
     ;
+    console.log();
 }
 //# sourceMappingURL=utils.js.map

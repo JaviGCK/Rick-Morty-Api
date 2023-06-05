@@ -1,6 +1,6 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
-import { setEpisodeList, loadEpisode, loadCharacter, loadOrigin } from "./promiseFunction.js";
-import { clearInfo, scrollInfinity } from "./utils.js";
+import { loadEpisodesList, loadEpisode, loadCharacter, loadOrigin } from "./fetchApi.js";
+import { scrollInfinity } from "./utils.js";
 
 /**
  * 
@@ -42,7 +42,6 @@ export function setHeaderContainer(): void {
   headerNavDivBtn.appendChild(headerNavDivBtnImg);
 
   setMainContainer();
-  //scrollInfinity();
 }
 
 
@@ -64,8 +63,6 @@ function setMainContainer(): void {
 
   setSideBar();
   setSectionInfo();
-  //setContainerInfo();
-
 }
 
 
@@ -74,11 +71,11 @@ function setMainContainer(): void {
  * here i have a side bar to create all elements to use for the list episodes, its function calls a function to call the api from promise
  */
 export function setSideBar(): void {
-  
 
   const main: (HTMLElement | null) = document.querySelector("main");
-  const sideBarAside: (HTMLElement | null) = document.createElement("div");
+  const sideBarAside: (HTMLElement | null) = document.createElement("aside");
   const sideBarDiv: (HTMLDivElement | null) = document.createElement("div");
+  const sideBarHeaderDiv: (HTMLDivElement | null) = document.createElement("div");
   const sideBarDivTitle: (HTMLHeadingElement | null) = document.createElement("h2");
   const sideBarDivUl: (HTMLDivElement | null) = document.createElement("div");
   const sideBarUlList: (HTMLUListElement | null) = document.createElement("ul");
@@ -86,13 +83,16 @@ export function setSideBar(): void {
   if (main === null) return;
   if (sideBarAside === null) return;
   if (sideBarDiv === null) return;
+  if (sideBarHeaderDiv === null) return;
   if (sideBarDivTitle === null) return;
   if (sideBarDivUl === null) return;
   if (sideBarUlList === null) return;
 
-  sideBarAside.classList.add("container-border");
-  sideBarAside.setAttribute("id", "side-bar")
-  sideBarDiv.classList.add("container-fluid");
+  sideBarAside.setAttribute("id", "side-bar");
+  sideBarAside.classList.add("w-25", "h-50");
+  sideBarDiv.setAttribute("id", "collapse-side-bar");
+  sideBarDiv.classList.add("container-border", "size-respons");
+  sideBarHeaderDiv.classList.add("container-fluid");
   sideBarDivTitle.classList.add("text-center", "mt-4", "text-yellow", "no-cursor");
   sideBarDivUl.classList.add("scroll-size", "size-respons-scroll");
   sideBarDivUl.setAttribute("id", "ulContainer");
@@ -103,13 +103,13 @@ export function setSideBar(): void {
 
   main.appendChild(sideBarAside);
   sideBarAside.appendChild(sideBarDiv);
-  sideBarDiv.appendChild(sideBarDivTitle);
-  sideBarAside.appendChild(sideBarDivUl);
+  sideBarDiv.appendChild(sideBarHeaderDiv);
+  sideBarHeaderDiv.appendChild(sideBarDivTitle);
+  sideBarDiv.appendChild(sideBarDivUl);
   sideBarDivUl.appendChild(sideBarUlList);
 
-  setEpisodeList();
+  loadEpisodesList();
   sideBarDivUl.addEventListener("scroll", scrollInfinity);
-
 }
 
 /**
@@ -117,7 +117,7 @@ export function setSideBar(): void {
  * @param data is a list episodes
  * create the elements neccesary to show name & id of each episode
  */
-export function createList(data: Episodes) {
+export function setList(data: Episodes) {
 
   const sideBarUl: (HTMLUListElement | null) = document.querySelector("#ul-list");
   if (sideBarUl === null) return;
@@ -140,16 +140,9 @@ export function createList(data: Episodes) {
     sideBarLi.appendChild(sideBarLiTitle);
     sideBarUl.appendChild(sideBarLi);
     sideBarLi.addEventListener("click", loadEpisode);
-
-
   });
 
 }
-
-
-
-
-
 
 export function setSectionInfo(): void {
 
@@ -158,7 +151,9 @@ export function setSectionInfo(): void {
 
   if (main === null) return;
   if (sectionInfo === null) return;
+  
   sectionInfo.setAttribute("id", "section-info");
+  sectionInfo.classList.add("h-75");
 
   main.appendChild(sectionInfo);
 }
@@ -170,8 +165,6 @@ export function setSectionInfo(): void {
  * @returns 
  */
 export function setContainerInfo(data: Episode) {
-
-  
 
   const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
   const sectionInfoHeaderDiv: (HTMLDivElement | null) = document.createElement("div");
@@ -202,9 +195,7 @@ export function setContainerInfo(data: Episode) {
 
 }
 
-export function createCardsInfo(characterData: Character) {
-
-  
+export function setCardsInfo(characterData: Character) {
 
   const sectionCardDiv: (HTMLElement | null) = document.querySelector("#section-card-div");
   const cardDiv: (HTMLDivElement | null) = document.createElement("div");
@@ -222,13 +213,11 @@ export function createCardsInfo(characterData: Character) {
   if (cardBodyDivTileSpecie === null) return;
   if (cardBodyDivTileSpecie === null) return;
 
-
-
   cardDiv.setAttribute("characterId", `${characterData.id}`);
   cardDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card", "cursor-select");
   cardDivImg.src = characterData.image;
   cardDivImg.alt = characterData.image;
-  cardDivImg.classList.add("card-img-top",);
+  cardDivImg.classList.add("card-img-top");
   cardDivBody.classList.add("card-body");
   cardBodyDivTitleName.classList.add("card-title", "mt-2");
   cardBodyDivTileStatus.classList.add("card-text", "mt-2");
@@ -250,9 +239,7 @@ export function createCardsInfo(characterData: Character) {
 
 }
 /** fixed this part of code*/
-export function createCharcacterInfo(data: Character) {
-
-  
+export function setCharcacterInfo(data: Character) {
 
   const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
   const sectionInfoContainerDiv = document.createElement("div");
@@ -270,6 +257,19 @@ export function createCharcacterInfo(data: Character) {
   const sectionInfoEpisodes = document.createElement("div");
 
   if (sectionInfo === null) return;
+  if (sectionInfoContainerDiv === null) return;
+  if (sectionInfoDivRow === null) return;
+  if (sectionInfoDivCol === null) return;
+  if (sectionInfoImg === null) return;
+  if (sectionInfoColDiv === null) return;
+  if (sectionInfoBodyDiv === null) return;
+  if (sectionInfoTitle === null) return;
+  if (sectionInfoStatus === null) return;
+  if (sectionInfoSpecies === null) return;
+  if (sectionInfoGender === null) return;
+  if (sectionInfoOrigin === null) return;
+  if (sectionInfoLineDiv === null) return;
+  if (sectionInfoEpisodes === null) return;
 
   sectionInfoImg.src = data.image;
   sectionInfoImg.alt = "Character Image";
@@ -317,33 +317,30 @@ export function createCharcacterInfo(data: Character) {
 
 }
 
-export function createEpisodeCharacter(episodeData: Episode) {
-
-  
+export function setEpisodeCharacter(episodeData: Episode) {
 
   const sectionInfoEpisodes = document.querySelector("#section-info-episodes");
-  const elementDiv = document.createElement("div");
-  const elementTitle = document.createElement("h5");
+  const sectionInfoEpisodesDiv = document.createElement("div");
+  const sectionInfoEpisodesTitle = document.createElement("h5");
 
   if (sectionInfoEpisodes === null) return;
+  if (sectionInfoEpisodesDiv === null) return;
+  if (sectionInfoEpisodesTitle === null) return;
 
-  elementDiv.setAttribute("episodeId", `${episodeData.id}`);
+  sectionInfoEpisodesDiv.setAttribute("episodeId", `${episodeData.id}`);
+  sectionInfoEpisodesDiv.classList.add("mb-3", "mt-divs");
+  sectionInfoEpisodesTitle.classList.add("text-center", "text-yellow");
 
-  elementDiv.classList.add("mb-3", "mt-divs");
-  elementTitle.classList.add("text-center", "text-yellow");
+  sectionInfoEpisodesTitle.innerText = `${episodeData.id} - ${episodeData.name}`;
 
-  elementTitle.textContent = `${episodeData.id} - ${episodeData.name}`;
-
-  elementDiv.appendChild(elementTitle);
-  sectionInfoEpisodes.appendChild(elementDiv);
-
-  elementDiv.addEventListener("click", loadEpisode);
+  sectionInfoEpisodes.appendChild(sectionInfoEpisodesDiv);
+  sectionInfoEpisodesDiv.appendChild(sectionInfoEpisodesTitle);
+  
+  sectionInfoEpisodesDiv.addEventListener("click", loadEpisode);
 }
 
 
-export function createOriginInfo(data: CharacterLocation) {
-
-  
+export function setOriginInfo(data: CharacterLocation) {
 
   const sectionInfo = document.querySelector("#section-info");
   const sectionInfoHeaderDiv = document.createElement("div");
@@ -352,6 +349,10 @@ export function createOriginInfo(data: CharacterLocation) {
   const sectionResident = document.createElement("div");
 
   if (sectionInfo === null) return;
+  if (sectionInfoHeaderDiv === null) return;
+  if (sectionInfoHeaderTitle === null) return;
+  if (sectionInfoHeaderType === null) return;
+  if (sectionResident === null) return;
 
   sectionInfo.classList.add("container-border");
   sectionInfoHeaderDiv.classList.add("episode-header", "no-cursor");
@@ -371,9 +372,6 @@ export function createOriginInfo(data: CharacterLocation) {
 }
 
 export function setResidents(characterData: Character) {
-  
-
-  const character = characterData;
 
   const sectionResident = document.querySelector("#section-resident");
   const sectionResidentDiv = document.createElement("div");
@@ -382,14 +380,21 @@ export function setResidents(characterData: Character) {
   const sectionResidentTitle = document.createElement("h5");
   const sectionResidentStatus = document.createElement("p");
   const sectionResidentSpecies = document.createElement("p");
+  const character = characterData;
 
   if (sectionResident === null) return;
+  if (sectionResidentDiv === null) return;
+  if (sectionResidentImg === null) return;
+  if (sectionResidentBodyDiv === null) return;
+  if (sectionResidentTitle === null) return;
+  if (sectionResidentStatus === null) return;
+  if (sectionResidentSpecies === null) return;
 
   sectionResidentDiv.setAttribute("characterId", `${character.id}`);
   sectionResidentDiv.classList.add("container-border", "text-yellow", "bg-pink", "border-card", "size-respons-card");
   sectionResidentImg.src = character.image;
   sectionResidentImg.alt = "Character Image";
-  sectionResidentImg.classList.add("card-img-top",);
+  sectionResidentImg.classList.add("card-img-top");
   sectionResidentBodyDiv.classList.add("card-body");
   sectionResidentTitle.classList.add("card-title", "mt-2");
   sectionResidentStatus.classList.add("card-text", "mt-2");

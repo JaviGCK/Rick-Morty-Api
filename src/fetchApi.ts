@@ -1,12 +1,12 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
-import { createList, setContainerInfo, createCardsInfo, createCharcacterInfo, createEpisodeCharacter, createOriginInfo, setResidents } from "./setHTML.js";
+import { setList, setContainerInfo, setCardsInfo, setCharcacterInfo, setEpisodeCharacter, setOriginInfo, setResidents } from "./setHTML.js";
 import { clearInfo } from "./utils.js";
 /**
  * 
  * this is working to show the name of episodes and call a function to show the character of episodes its working on the side bar
  */
 
-export function setEpisodeList(): void {
+export function loadEpisodesList(): void {
 
     const sideBarAside: (HTMLElement | null) = document.querySelector("#side-bar");
     const sideBarDivUl: (HTMLDivElement | null) = document.createElement("div");
@@ -27,7 +27,7 @@ export function setEpisodeList(): void {
     fetch(url)
         .then(response => response.json())
         .then((data: Episodes) => {
-            createList(data);
+            setList(data);
         })
         .catch(error => {
             console.error("Error loading Episodes", error);
@@ -49,14 +49,13 @@ export function loadEpisode(this: HTMLElement) {
 
             setContainerInfo(data);
 
-            const episodes = data.episode;
             const characterURLs: string[] = data.characters;
 
             characterURLs.forEach((characterURL: string) => {
                 fetch(characterURL)
                     .then(response => response.json())
                     .then((data: Character) => {
-                        createCardsInfo(data);
+                        setCardsInfo(data);
                     })
                     .catch(error => {
                         console.error("Error loading Episode", error);
@@ -81,7 +80,7 @@ export function loadCharacter(this: HTMLElement) {
         .then((response) => response.json())
         .then((data: Character) => {
 
-            createCharcacterInfo(data);
+            setCharcacterInfo(data);
 
             const episodes = data.episode;
 
@@ -89,7 +88,7 @@ export function loadCharacter(this: HTMLElement) {
                 fetch(episodeUrl)
                     .then(response => response.json())
                     .then((data: Episode) => {
-                        createEpisodeCharacter(data);
+                        setEpisodeCharacter(data);
                     })
                     .catch(error => {
                         console.error("Error loading Character", error);
@@ -111,7 +110,7 @@ export function loadOrigin(this: HTMLElement) {
     fetch(`${urlOrigin}`)
         .then(response => response.json())
         .then((data: CharacterLocation) => {
-            createOriginInfo(data);
+            setOriginInfo(data);
 
 
             const residents = data.residents

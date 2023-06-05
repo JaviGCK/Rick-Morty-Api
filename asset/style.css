@@ -64,6 +64,9 @@ body {
   height: 70vh;
 }
 
+.max-heigth {
+  max-height: 85vh;
+}
 .scroll-size {
   height: 65vh;
   overflow-y: scroll;
@@ -110,11 +113,6 @@ body {
 
 .bg-pink {
   background-color: #e4a788;
-  opacity: calc(0.9);
-}
-
-.card-img-top {
-  opacity: 1;
 }
 
 /* RESPONSIVE STYLES */
@@ -160,6 +158,8 @@ body {
   .center-title-respons {
     padding-left: 30vw;
   }
+
+  /* SCROLLS*/
 
   .scroll-respons {
     overflow: auto;

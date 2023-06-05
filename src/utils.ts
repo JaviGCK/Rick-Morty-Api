@@ -1,10 +1,9 @@
-import { setEpisodeList } from "./promiseFunction.js";
-import { setSideBar } from "./setHTML.js";
+import { loadEpisodesList } from "./fetchApi.js";
 /**
  * 
  * clean the info
  */
-export function clearInfo() {
+export function clearInfo(): void {
     
     const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
     if(sectionInfo === null) return;
@@ -22,8 +21,9 @@ export function scrollInfinity(): void {
     const scrollTop = sideBarUl.scrollTop;
     const scrollHeight = sideBarUl.scrollHeight;
     const clientHeight = sideBarUl.clientHeight;
-
+    
     if (scrollTop + clientHeight >= scrollHeight - 200 && sideBarUl.childElementCount !== 51) {
-        setEpisodeList();
+        loadEpisodesList();
     };
+    console.log();
 }
