@@ -51,6 +51,17 @@ function setMainContainer() {
     setSideBar();
     setSectionInfo();
 }
+export function setSectionInfo() {
+    const main = document.querySelector("#main");
+    const sectionInfo = document.createElement("section");
+    if (main === null)
+        return;
+    if (sectionInfo === null)
+        return;
+    sectionInfo.setAttribute("id", "section-info");
+    sectionInfo.classList.add("h-75");
+    main.appendChild(sectionInfo);
+}
 export function setSideBar() {
     const main = document.querySelector("main");
     const sideBarAside = document.createElement("aside");
@@ -114,17 +125,6 @@ export function setList(data) {
         sideBarUl.appendChild(sideBarLi);
         sideBarLi.addEventListener("click", loadEpisode);
     });
-}
-export function setSectionInfo() {
-    const main = document.querySelector("#main");
-    const sectionInfo = document.createElement("section");
-    if (main === null)
-        return;
-    if (sectionInfo === null)
-        return;
-    sectionInfo.setAttribute("id", "section-info");
-    sectionInfo.classList.add("h-75");
-    main.appendChild(sectionInfo);
 }
 export function setContainerInfo(data) {
     const sectionInfo = document.querySelector("#section-info");
@@ -328,6 +328,7 @@ export function setOriginInfo(data) {
     sectionInfo.appendChild(sectionResident);
 }
 export function setResidents(characterData) {
+    console.log(characterData);
     const sectionResident = document.querySelector("#section-resident");
     const sectionResidentDiv = document.createElement("div");
     const sectionResidentImg = document.createElement("img");

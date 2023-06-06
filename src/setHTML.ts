@@ -1,7 +1,6 @@
 import { Character, Episode, Episodes, CharacterLocation } from "./types";
 import { loadEpisodesList, loadEpisode, loadCharacter, loadOrigin } from "./fetchApi.js";
 import { scrollInfinity } from "./utils.js";
-
 /**
  * 
  * this create header on the body like a top position, even call setMainContainer
@@ -43,11 +42,9 @@ export function setHeaderContainer(): void {
 
   setMainContainer();
 }
-
-
 /**
  * 
- * i create a main with some neccesary class
+ * create a main 
  */
 function setMainContainer(): void {
 
@@ -64,8 +61,23 @@ function setMainContainer(): void {
   setSideBar();
   setSectionInfo();
 }
+/**
+ * 
+ * create a section to show the info of episode characters, characters and origin characters;
+ */
+export function setSectionInfo(): void {
 
+  const main: (HTMLElement | null) = document.querySelector("#main");
+  const sectionInfo: (HTMLElement | null) = document.createElement("section");
 
+  if (main === null) return;
+  if (sectionInfo === null) return;
+  
+  sectionInfo.setAttribute("id", "section-info");
+  sectionInfo.classList.add("h-75");
+
+  main.appendChild(sectionInfo);
+}
 /**
  * 
  * here i have a side bar to create all elements to use for the list episodes, its function calls a function to call the api from promise
@@ -107,8 +119,9 @@ export function setSideBar(): void {
   sideBarHeaderDiv.appendChild(sideBarDivTitle);
   sideBarDiv.appendChild(sideBarDivUl);
   sideBarDivUl.appendChild(sideBarUlList);
-
+  
   loadEpisodesList();
+  
   sideBarDivUl.addEventListener("scroll", scrollInfinity);
 }
 
@@ -141,23 +154,7 @@ export function setList(data: Episodes) {
     sideBarUl.appendChild(sideBarLi);
     sideBarLi.addEventListener("click", loadEpisode);
   });
-
 }
-
-export function setSectionInfo(): void {
-
-  const main: (HTMLElement | null) = document.querySelector("#main");
-  const sectionInfo: (HTMLElement | null) = document.createElement("section");
-
-  if (main === null) return;
-  if (sectionInfo === null) return;
-  
-  sectionInfo.setAttribute("id", "section-info");
-  sectionInfo.classList.add("h-75");
-
-  main.appendChild(sectionInfo);
-}
-
 
 /**
  * 
@@ -194,7 +191,11 @@ export function setContainerInfo(data: Episode) {
   sectionInfoHeaderDiv.appendChild(sectionInfoHeaderTitleAirData);
 
 }
-
+/**
+ * 
+ * @param characterData  brings an object with the necessary information for each character, in the previous function a loop is used to call this function as many times as there are characters in the episode.
+ * 
+ */
 export function setCardsInfo(characterData: Character) {
 
   const sectionCardDiv: (HTMLElement | null) = document.querySelector("#section-card-div");
@@ -238,7 +239,11 @@ export function setCardsInfo(characterData: Character) {
   cardDiv.addEventListener("click", loadCharacter);
 
 }
-/** fixed this part of code*/
+/**
+ * 
+ * @param data brings an object with the necessary information of each character
+ * 
+ */
 export function setCharcacterInfo(data: Character) {
 
   const sectionInfo: (HTMLElement | null) = document.querySelector("#section-info");
@@ -313,12 +318,14 @@ export function setCharcacterInfo(data: Character) {
   if (data.origin.name !== "unknown") {
     sectionInfoOrigin.addEventListener("click", loadOrigin);
   }
-
-
 }
-
+/**
+ * 
+ * @param brings the objects of all the chapters where said character appears, we use them to be able to call those chapters
+ *  
+ */
 export function setEpisodeCharacter(episodeData: Episode) {
-
+  
   const sectionInfoEpisodes = document.querySelector("#section-info-episodes");
   const sectionInfoEpisodesDiv = document.createElement("div");
   const sectionInfoEpisodesTitle = document.createElement("h5");
@@ -338,10 +345,13 @@ export function setEpisodeCharacter(episodeData: Episode) {
   
   sectionInfoEpisodesDiv.addEventListener("click", loadEpisode);
 }
-
-
+/**
+ * 
+ * @param data sends you an object with the necessary information about the planets of origin
+ * 
+ */
 export function setOriginInfo(data: CharacterLocation) {
-
+  
   const sectionInfo = document.querySelector("#section-info");
   const sectionInfoHeaderDiv = document.createElement("div");
   const sectionInfoHeaderTitle = document.createElement("h2");
@@ -370,9 +380,13 @@ export function setOriginInfo(data: CharacterLocation) {
   sectionInfo.appendChild(sectionInfoHeaderDiv);
   sectionInfo.appendChild(sectionResident);
 }
-
+/**
+ * 
+ * @param characterData sends you several objects with the necessary information of the characters that share the planet of origin
+ * 
+ */
 export function setResidents(characterData: Character) {
-
+  console.log(characterData)
   const sectionResident = document.querySelector("#section-resident");
   const sectionResidentDiv = document.createElement("div");
   const sectionResidentImg = document.createElement("img");

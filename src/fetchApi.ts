@@ -5,7 +5,6 @@ import { clearInfo } from "./utils.js";
  * 
  * this is working to show the name of episodes and call a function to show the character of episodes its working on the side bar
  */
-
 export function loadEpisodesList(): void {
 
     const sideBarAside: (HTMLElement | null) = document.querySelector("#side-bar");
@@ -33,9 +32,10 @@ export function loadEpisodesList(): void {
             console.error("Error loading Episodes", error);
         });
 }
-
-
-
+/**
+ * 
+ * @param this collects the information we need to call the episode we have clicked
+ */
 
 export function loadEpisode(this: HTMLElement) {
 
@@ -66,8 +66,10 @@ export function loadEpisode(this: HTMLElement) {
             console.error("Error loading Character", error);
         });
 }
-
-
+/**
+ * 
+ * @param this collects the information we need to call the character we have clicked
+ */
 export function loadCharacter(this: HTMLElement) {
 
     clearInfo();
@@ -99,8 +101,10 @@ export function loadCharacter(this: HTMLElement) {
             console.error("Error loading Episode", error);
         });
 }
-
-
+/**
+ * 
+ * @param this this collects the information we need to call the origin of character we have clicked
+ */
 export function loadOrigin(this: HTMLElement) {
 
     clearInfo();

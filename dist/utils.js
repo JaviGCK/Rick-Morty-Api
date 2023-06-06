@@ -1,4 +1,5 @@
 import { loadEpisodesList } from "./fetchApi.js";
+let isScrolling = false;
 export function clearInfo() {
     const sectionInfo = document.querySelector("#section-info");
     if (sectionInfo === null)
@@ -6,7 +7,10 @@ export function clearInfo() {
     sectionInfo.replaceChildren();
 }
 export function scrollInfinity() {
-    console.log("functionscroll dentro");
+    if (isScrolling) {
+        return;
+    }
+    isScrolling = true;
     const sideBarUl = document.querySelector("#ul-list");
     if (sideBarUl === null)
         return;
@@ -15,8 +19,7 @@ export function scrollInfinity() {
     const clientHeight = sideBarUl.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight - 200 && sideBarUl.childElementCount !== 51) {
         loadEpisodesList();
+        isScrolling = false;
     }
-    ;
-    console.log();
 }
 //# sourceMappingURL=utils.js.map
