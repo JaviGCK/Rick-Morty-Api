@@ -21,7 +21,7 @@ export function setHeaderContainer() {
         return;
     headerNav.classList.add("navbar", "navbar-expand-lg", "navbar-dark", "bg-transparent");
     headerNavDiv.classList.add("container-fluid");
-    headerNavDivH1.classList.add("text-yellow", "fs-1", "text", "center-title", "center-title-respons", "mt-4", "no-cursor");
+    headerNavDivH1.classList.add("text-yellow", "fs-1", "text", "center-title", "center-title-respons", "mt-4", "no-cursor", "font-style");
     headerNavDivBtn.classList.add("button-style", "container-border");
     headerNavDivBtn.setAttribute("type", "button");
     headerNavDivBtn.setAttribute("data-bs-toggle", "collapse");
