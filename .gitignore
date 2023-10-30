@@ -1,0 +1,25 @@
+# Dependency directories
+/node_modules
+
+# Compiled output
+/dist
+
+# Environment variables
+.env
+.env.development.local
+.env.development
+.env.test.local
+.env.production.local
+.env.production
+.env.local
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# Log files
+logs/
+*.log
+
+# Mac OS
+.DS_Store
