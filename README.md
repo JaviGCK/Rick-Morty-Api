@@ -2,7 +2,7 @@
 
 Welcome to the Rick and Morty Web App, where you can explore the world of Rick and Morty by accessing character information, episodes, and locations. This web app is built using TypeScript, HTML, and CSS and makes use of the Rick and Morty API for fetching data. The app is responsive and works on both mobile and desktop devices.
 
-![Rick and Morty]([https://github.com/JaviGCK/Rick-Morty-Api/blob/main/images/Captura%20de%20pantalla%202023-10-30%20a%20las%2010.28.30%20en%20tama%C3%B1o%20grande.png](https://github.com/JaviGCK/Rick-Morty-Api/blob/main/images/Captura%20de%20pantalla%202023-10-30%20a%20las%2010.28.30%20en%20tama%C3%B1o%20grande%20en%20tama%C3%B1o%20peque%C3%B1o.png))
+![Rick and Morty](https://github.com/JaviGCK/Rick-Morty-Api/blob/main/images/Captura%20de%20pantalla%202023-10-30%20a%20las%2010.28.30%20en%20tama%C3%B1o%20grande.png)
 ![Rick and Morty](https://github.com/JaviGCK/Rick-Morty-Api/blob/main/images/Captura%20de%20pantalla%202023-10-30%20a%20las%2010.28.30.png)
 
 ## Demo
